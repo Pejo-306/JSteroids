@@ -1,0 +1,29 @@
+{
+  "name": "JSteroids",
+  "version": "0.1.0",
+  "description": "Classical Asteroids game implemented in JavaScript",
+  "main": "scripts/index.js",
+  "scripts": {
+    "build": "webpack",
+    "start": "npm run build && webpack-dev-server --port=8000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pejo-306/JSteroids.git"
+  },
+  "author": "Petar Nikolov <penikolov23@gmail.com>",
+  "license": "MIT",
+  "licenseUrl": "http://www.opensource.org/licenses/mit-license.php",
+  "bugs": {
+    "url": "https://github.com/Pejo-306/JSteroids/issues"
+  },
+  "devDependencies": {
+    "raw-loader": "^1.0.0",
+    "webpack": "^4.29.5",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.2.1"
+  },
+  "dependencies": {
+    "phaser": "^3.16.2"
+  }
+}
