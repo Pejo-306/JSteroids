@@ -11,13 +11,13 @@ import GameObject from './GameObject.js';
  */
 class Player extends GameObject {
 
-    static get ROTATION_RATE () { return 2; }
+    static get STARTING_ANGLE () { return -90; }
 
-    static get ACCELERATION_RATE () { return 60; }
+    static get DRAG () { return 50; }
 
-    static get ACCELERATION_LIMIT () { return 30; }
+    static get MAX_VELOCITY () { return 200; }
 
-    static get DRAG () { return 80; }
+    static get ANGULAR_VELOCITY () { return 200; }
 
     /**
      * Construct player's game object.
@@ -50,44 +50,36 @@ class Player extends GameObject {
     spawn (x, y) {
         this.sprite = this.scene.physics.add.sprite(x, y, 'player');
         this.sprite.body.setAllowGravity(false);
-        this.sprite.body.drag.setTo(this.constructor.DRAG, this.constructor.DRAG);
+        this.sprite.setDrag(this.constructor.DRAG);
+        this.sprite.body.setMaxVelocity(this.constructor.MAX_VELOCITY);
+        this.sprite.angle = this.constructor.STARTING_ANGLE;
     }
 
     /**
      * Player's behavioural code that is executed on each game loop iteration.
      *
-     * The player's movement is described in this method. The player controls 
-     * his/her object via the cursor keys - they may accelerate forwards, as
-     * well as rotate in both directions.
+     * The player may control his/her object via the cursor keys - accelerate 
+     * forwards, as well as rotate in both directions.
      */
     update () {
         let cursors = this.scene.input.keyboard.createCursorKeys();
 
         if (cursors.up.isDown) {  // accelerate the player forwards
-            let horizontalAcceleration = this.constructor.ACCELERATION_RATE
-                * Math.cos(Phaser.Math.DegToRad(this.sprite.angle - 90));
-            // The player's horizontal acceleration is capped at the acceleration's limit
-            this.sprite.body.acceleration.x = Math.min(
-                horizontalAcceleration,
-                this.constructor.ACCELERATION_LIMIT
-            );
-
-            let verticalAcceleration = this.constructor.ACCELERATION_RATE
-                * Math.sin(Phaser.Math.DegToRad(this.sprite.angle - 90));
-            // The player's vertical acceleration is capped at the acceleration's limit
-            this.sprite.body.acceleration.y = Math.min(
-                verticalAcceleration,
-                this.constructor.ACCELERATION_LIMIT
+            this.scene.physics.velocityFromRotation(
+                this.sprite.rotation, 
+                this.constructor.MAX_VELOCITY,
+                this.sprite.body.acceleration
             );
         } else {  // halt the player's acceleration
-            this.sprite.body.acceleration.x = 0;
-            this.sprite.body.acceleration.y = 0;
+            this.sprite.setAcceleration(0);
         }
 
         if (cursors.left.isDown) {  // rotate the player counterclockwise
-            this.sprite.angle -= this.constructor.ROTATION_RATE;
+            this.sprite.setAngularVelocity(-this.constructor.ANGULAR_VELOCITY);
         } else if (cursors.right.isDown) {  // rotate the player clockwise
-            this.sprite.angle += this.constructor.ROTATION_RATE;
+            this.sprite.setAngularVelocity(this.constructor.ANGULAR_VELOCITY);
+        } else {
+            this.sprite.setAngularVelocity(0);
         }
     }
 
