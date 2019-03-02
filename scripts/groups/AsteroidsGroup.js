@@ -18,8 +18,8 @@ class AsteroidsGroup extends PhysicsGroup {
         Asteroid.preload(scene);
     }
 
-    spawn (x, y) {
-        let asteroid = new Asteroid(this.game, this.group);
+    spawn (x, y, level) {
+        let asteroid = new Asteroid(this.game, this.group, level);
 
         asteroid.spawn(x, y);
         this.gameObjects.add(asteroid);
@@ -37,8 +37,9 @@ class AsteroidsGroup extends PhysicsGroup {
             while (keepoutZones.some(function (zone) { 
                 return zone.contains(positionX, positionY); 
             }));
-            keepoutZones.push(new KeepoutZone(positionX, positionY, radii[0]));
-            this.spawn(positionX, positionY);
+            let level = generateRandomInteger(Asteroid.MIN_LEVEL, Asteroid.MAX_LEVEL, false);
+            keepoutZones.push(new KeepoutZone(positionX, positionY, radii[level-1]));
+            this.spawn(positionX, positionY, level);
         }
     }
 

@@ -74,11 +74,16 @@ class Main extends Phaser.Scene {
             this.gameObjects['player'].sprite.body.center.x,
             this.gameObjects['player'].sprite.body.center.y,
             this.constructor.KEEPOUT_ZONE_RADIUS
-        )
+        );
+        let keepoutZoneRadii = [
+            this.constructor.KEEPOUT_ZONE_RADIUS,
+            this.constructor.KEEPOUT_ZONE_RADIUS / 2,
+            this.constructor.KEEPOUT_ZONE_RADIUS / 4,
+        ];
 
         this.gameObjects['asteroids-group'].spawnMultiple(
             numOfAsteroids, 
-            [this.constructor.KEEPOUT_ZONE_RADIUS],
+            keepoutZoneRadii,
             [playerKeepoutZone]
         );
     }
