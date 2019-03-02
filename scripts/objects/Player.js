@@ -14,7 +14,7 @@ import GameObject from './GameObject.js';
  *
  * Contains all game logic required to spawn and control the player's 
  * game object. The latter is represented by a spaceship which flies around
- * in space and may shoot objects.
+ * in space and may shoot at objects.
  *
  * @class Player
  * @since 0.1.0
@@ -24,7 +24,9 @@ class Player extends GameObject {
     /**
      * Starting orientation.
      *
+     * @public
      * @static
+     * @readonly
      * @method Player.STARTING_ANGLE
      * @since 0.1.0
      *
@@ -35,7 +37,9 @@ class Player extends GameObject {
     /**
      * Game object's drag.
      *
+     * @public
      * @static
+     * @readonly
      * @method Player.DRAG
      * @since 0.1.0
      *
@@ -46,7 +50,9 @@ class Player extends GameObject {
     /**
      * Max velocity of player's physics sprite.
      *
+     * @public
      * @static
+     * @readonly
      * @method Player.MAX_VELOCITY
      * @since 0.1.0
      *
@@ -57,7 +63,9 @@ class Player extends GameObject {
     /**
      * Angular velocity which is set when rotating the player's sprite.
      *
+     * @public
      * @static
+     * @readonly
      * @method Player.ANGULAR_VELOCITY
      * @since 0.1.0
      *
@@ -65,16 +73,51 @@ class Player extends GameObject {
      */
     static get ANGULAR_VELOCITY () { return 200; }
 
+    /**
+     * Number of projectiles fired per second.
+     *
+     * @public
+     * @static
+     * @readonly
+     * @method Player.FIRE_RATE
+     * @since 0.1.0
+     *
+     * @return {number} Fire rate.
+     */
     static get FIRE_RATE () { return 10; }
 
+    /**
+     * Time in which the player is temporary invincible.
+     *
+     * @public
+     * @static
+     * @readonly
+     * @method Player.INVINCIBILITY_TIME
+     * @since 0.1.0
+     *
+     * @return {number} Invincibility time.
+     */
     static get INVINCIBILITY_TIME () { return 2000; }
 
+    /**
+     * Time in which the player's sprite is invisible when flashing.
+     *
+     * @public
+     * @static
+     * @readonly
+     * @method Player.FLASH_TIME
+     * @since 0.1.0
+     *
+     * @return {number} Time in which the player's sprite is invisible.
+     */
     static get FLASH_TIME () { return 100; }
     
     /**
      * Padding added to each world boundary edge.
-     *
+     * 
+     * @public
      * @static
+     * @readonly
      * @method Player.WRAP_PADDING
      * @since 0.1.0
      *
@@ -102,7 +145,9 @@ class Player extends GameObject {
     /**
      * Preload resources required by player's game object.
      *
+     * @public
      * @static
+     * @override
      * @method Player.preload
      * @since 0.1.0
      *
@@ -118,6 +163,8 @@ class Player extends GameObject {
      * This method creates the game object's physics sprite and sets all
      * appropriate physics related properties.
      *
+     * @public
+     * @override
      * @method Player#spawn
      * @since 0.1.0
      *
@@ -151,6 +198,8 @@ class Player extends GameObject {
      * The player may control his/her object via the cursor keys - accelerate 
      * forwards, as well as rotate in both directions.
      *
+     * @public
+     * @override
      * @method Player#update
      * @since 0.1.0
      */
@@ -192,14 +241,45 @@ class Player extends GameObject {
         }
     }
 
+    /**
+     * Destroy player game object.
+     *
+     * Currently this method does nothing.
+     *
+     * @public
+     * @override
+     * @method Player#destroy
+     * @since 0.1.0
+     */
     destroy () {
         // Do nothing
     }
 
+    /**
+     * Fire a projectile forwards.
+     *
+     * @public
+     * @method Player#fireProjectile
+     * @since 0.1.0
+     */
     fireProjectile () {
         this.projectilesGroup.spawn(this.sprite.x, this.sprite.y, this.sprite.angle);
     }
 
+    /**
+     * Handle a collision between the player and an asteroid.
+     *
+     * If the player is not in state of temporary invincibility, the colliding
+     * asteroid is destroyed while the player is killed.
+     *
+     * @public
+     * @callback Player~collideWithAsteroid
+     * @method Player#collideWithAsteroid
+     * @since 0.1.0
+     *
+     * @param {Phaser.GameObjects.Sprite} playerSprite - The player's colliding sprite.
+     * @param {Phaser.GameObjects.Sprite} asteroidSprite - The asteroid's colliding sprite.
+     */
     collideWithAsteroid (playerSprite, asteroidSprite) {
         if (!this.invincible) {
             let asteroid = this.scene.gameObjects['asteroids-group'].memberObjects
@@ -210,6 +290,15 @@ class Player extends GameObject {
         }
     }
 
+    /**
+     * Player death.
+     *
+     * The player is marked as dead and their sprite is destroyed.
+     *
+     * @private
+     * @method Player#death
+     * @since 0.1.0
+     */
     death () {
         // TODO: add death animation
         this.dead = true;
@@ -217,6 +306,15 @@ class Player extends GameObject {
         this.scene.killPlayer();
     }
 
+    /**
+     * Disable the player's sprite.
+     *
+     * After some dealy time, the player's sprite is shown again.
+     *
+     * @private
+     * @method Player#flashSprite
+     * @since 0.1.0
+     */
     flashSprite () {
         if (this.invincible) {
             this.sprite.setVisible(false);
@@ -228,6 +326,15 @@ class Player extends GameObject {
         }
     }
 
+    /**
+     * Show the player's sprite.
+     *
+     * After some dealy time, the player's sprite is hidden again.
+     *
+     * @private
+     * @method Player#showSprite
+     * @since 0.1.0
+     */
     showSprite () {
         this.sprite.setVisible(true);
         if (this.invincible) {
