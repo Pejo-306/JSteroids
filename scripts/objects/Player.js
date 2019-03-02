@@ -66,6 +66,10 @@ class Player extends GameObject {
     static get ANGULAR_VELOCITY () { return 200; }
 
     static get FIRE_RATE () { return 10; }
+
+    static get INVINCIBILITY_TIME () { return 2000; }
+
+    static get FLASH_TIME () { return 100; }
     
     /**
      * Padding added to each world boundary edge.
@@ -92,6 +96,7 @@ class Player extends GameObject {
         this.projectilesGroup = projectilesGroup;
         this.dead = false;
         this.canFire = true;
+        this.invincible = false;
     }
 
     /**
@@ -121,7 +126,7 @@ class Player extends GameObject {
      *
      * @return {Player} This player instance.
      */
-    spawn (x, y) {
+    spawn (x, y, invincible = false) {
         this.sprite = this.scene.physics.add.sprite(x, y, 'player');
         this.sprite.body.setAllowGravity(false);
         this.sprite.setDamping(true);
@@ -129,6 +134,14 @@ class Player extends GameObject {
         this.sprite.body.setMaxVelocity(this.constructor.MAX_VELOCITY);
         this.sprite.angle = this.constructor.STARTING_ANGLE;
         this.dead = false;
+        if (this.invincible = invincible) {
+            this.scene.time.addEvent({
+                delay: this.constructor.INVINCIBILITY_TIME,
+                callback: function () { this.invincible = false },
+                callbackScope: this
+            });
+            this.flashSprite();
+        }
         return this;
     }
 
@@ -174,7 +187,7 @@ class Player extends GameObject {
                 });
             }
 
-            // Keep the player within the physics world bounds.
+            // Keep the player within the physics world bounds
             this.scene.physics.world.wrap(this.sprite, this.constructor.WRAP_PADDING);
         }
     }
@@ -187,8 +200,14 @@ class Player extends GameObject {
         this.projectilesGroup.spawn(this.sprite.x, this.sprite.y, this.sprite.angle);
     }
 
-    collideWithAsteroid (player, asteroid) {
-        this.death();
+    collideWithAsteroid (playerSprite, asteroidSprite) {
+        if (!this.invincible) {
+            let asteroid = this.scene.gameObjects['asteroids-group'].memberObjects
+                .get('sprite', asteroidSprite);
+
+            this.death();
+            asteroid.destroy();
+        }
     }
 
     death () {
@@ -196,6 +215,28 @@ class Player extends GameObject {
         this.dead = true;
         this.sprite.destroy();
         this.scene.killPlayer();
+    }
+
+    flashSprite () {
+        if (this.invincible) {
+            this.sprite.setVisible(false);
+            this.scene.time.addEvent({
+                delay: this.constructor.FLASH_TIME,
+                callback: this.showSprite,
+                callbackScope: this
+            });
+        }
+    }
+
+    showSprite () {
+        this.sprite.setVisible(true);
+        if (this.invincible) {
+            this.scene.time.addEvent({
+                delay: this.constructor.FLASH_TIME,
+                callback: this.flashSprite,
+                callbackScope: this
+            });
+        }
     }
 
 }

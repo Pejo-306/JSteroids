@@ -41,7 +41,7 @@ class Main extends Phaser.Scene {
         let playerSpawnX = this.physics.world.bounds.centerX;
         let playerSpawnY = this.physics.world.bounds.centerY;
         
-        this.spawnPlayer(playerSpawnX, playerSpawnY);
+        this.spawnPlayer(playerSpawnX, playerSpawnY, false);
         this.spawnAsteroids(5);
         this.addPlayerAsteroidsOverlap();
         this.physics.add.collider(
@@ -91,8 +91,8 @@ class Main extends Phaser.Scene {
         this.controls.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     }
 
-    spawnPlayer (spawnX, spawnY) {
-        this.gameObjects['player'].spawn(spawnX, spawnY);
+    spawnPlayer (spawnX, spawnY, invincibility = true) {
+        this.gameObjects['player'].spawn(spawnX, spawnY, invincibility);
         this.addPlayerAsteroidsOverlap();
     }
 
