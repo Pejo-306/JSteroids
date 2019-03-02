@@ -64,6 +64,8 @@ class Player extends GameObject {
      * @return {number} Angular velocity value.
      */
     static get ANGULAR_VELOCITY () { return 200; }
+
+    static get FIRE_RATE () { return 10; }
     
     /**
      * Padding added to each world boundary edge.
@@ -84,10 +86,12 @@ class Player extends GameObject {
      *
      * @param {Game} game - Reference to the Phaser game instance.
      */
-    constructor (game) {
+    constructor (game, projectilesGroup) {
         super(game);
 
+        this.projectilesGroup = projectilesGroup;
         this.dead = false;
+        this.canFire = true;
     }
 
     /**
@@ -139,9 +143,7 @@ class Player extends GameObject {
      */
     update () {
         if (!this.dead) {
-            let cursors = this.scene.input.keyboard.createCursorKeys();
-
-            if (cursors.up.isDown) {  // accelerate the player forwards
+            if (this.scene.controls.cursors.up.isDown) {  // accelerate the player forwards
                 this.scene.physics.velocityFromRotation(
                     this.sprite.rotation, 
                     this.constructor.MAX_VELOCITY,
@@ -151,17 +153,34 @@ class Player extends GameObject {
                 this.sprite.setAcceleration(0);
             }
 
-            if (cursors.left.isDown) {  // rotate the player counterclockwise
+            if (this.scene.controls.cursors.left.isDown) {  // rotate the player counterclockwise
                 this.sprite.setAngularVelocity(-this.constructor.ANGULAR_VELOCITY);
-            } else if (cursors.right.isDown) {  // rotate the player clockwise
+            } else if (this.scene.controls.cursors.right.isDown) {  // rotate the player clockwise
                 this.sprite.setAngularVelocity(this.constructor.ANGULAR_VELOCITY);
             } else {
                 this.sprite.setAngularVelocity(0);
             }
 
+            // Fire a projectile
+            if (this.scene.controls.spacebar.isDown && this.canFire) {
+                this.fireProjectile();
+                // Prevent the player firing again until <1 / FIRE_RATE>
+                // seconds have passed
+                this.canFire = false;
+                this.scene.time.addEvent({
+                    delay: 1000 / this.constructor.FIRE_RATE,
+                    callback: function () { this.canFire = true; },
+                    callbackScope: this
+                });
+            }
+
             // Keep the player within the physics world bounds.
             this.scene.physics.world.wrap(this.sprite, this.constructor.WRAP_PADDING);
         }
+    }
+
+    fireProjectile () {
+        this.projectilesGroup.spawn(this.sprite.x, this.sprite.y, this.sprite.angle);
     }
 
     collideWithAsteroid (player, asteroid) {

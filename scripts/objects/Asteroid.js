@@ -1,6 +1,7 @@
 import 'phaser';
 
 import GroupGameObject from './GroupGameObject.js';
+
 import { generateRandomInteger } from '../helper/random.js';
 
 class Asteroid extends GroupGameObject {
@@ -15,8 +16,8 @@ class Asteroid extends GroupGameObject {
 
     static get WRAP_PADDING () { return 32; }
 
-    constructor (game, group, level) {
-        super(game, group);
+    constructor (game, physicsGroup, level) {
+        super(game, physicsGroup);
 
         let minLevel = this.constructor.MIN_LEVEL;
         let maxLevel = this.constructor.MAX_LEVEL;

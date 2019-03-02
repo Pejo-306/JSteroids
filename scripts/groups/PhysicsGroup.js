@@ -9,7 +9,7 @@ class PhysicsGroup {
 
         this.game = game;
         this.spriteGroup = null;
-        this.gameObjects = new Set();
+        this.memberObjects = new Set();
     }
 
     static preload (scene) {
@@ -22,6 +22,14 @@ class PhysicsGroup {
 
     update () {
         throw new Error(`${this.constructor.name}: must implement abstract method update()`);
+    }
+
+    addMember (gameObject) {
+        this.memberObjects.add(gameObject);
+    }
+
+    destroyMember (gameObject) {
+        this.memberObjects.delete(gameObject); 
     }
 
     get group () {

@@ -19,10 +19,10 @@ class AsteroidsGroup extends PhysicsGroup {
     }
 
     spawn (x, y, level) {
-        let asteroid = new Asteroid(this.game, this.group, level);
+        let asteroid = new Asteroid(this.game, this, level);
 
         asteroid.spawn(x, y);
-        this.gameObjects.add(asteroid);
+        this.addMember(asteroid);
     }
 
     spawnMultiple (numOfAsteroids, radii, keepoutZones = []) {
@@ -44,7 +44,7 @@ class AsteroidsGroup extends PhysicsGroup {
     }
 
     update () {
-        for (let asteroid of this.gameObjects) {
+        for (let asteroid of this.memberObjects) {
             asteroid.update();
         }
     }
