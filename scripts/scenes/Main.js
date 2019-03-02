@@ -9,6 +9,10 @@ class Main extends Phaser.Scene {
 
     static get KEEPOUT_ZONE_RADIUS () { return 128; }
 
+    static get PLAYER_LIVES () { return 3; }
+
+    static get PLAYER_RESPAWN_DELAY () { return 2000; }
+
     /**
      * Construct the main Phaser scene which contains the gameplay.
      */
@@ -16,6 +20,7 @@ class Main extends Phaser.Scene {
         super();
 
         this.gameObjects = {};
+        this.playerLives = this.constructor.PLAYER_LIVES;
     }
 
     /**
@@ -29,15 +34,39 @@ class Main extends Phaser.Scene {
     create () {
         let player = this.gameObjects['player'] = new Player(this.game);
         let asteroidsGroup = this.gameObjects['asteroids-group'] = new AsteroidsGroup(this.game);
+        let playerSpawnX = this.physics.world.bounds.centerX;
+        let playerSpawnY = this.physics.world.bounds.centerY;
         
-        player.spawn(this.physics.world.bounds.centerX, this.physics.world.bounds.centerY);
+        this.spawnPlayer(playerSpawnX, playerSpawnY);
         this.spawnAsteroids(5);
+        this.addPlayerAsteroidsOverlap();
+        this.events.on('spawnPlayer', this.spawnPlayer, this);
     }
 
     update () {
         for (let objectName in this.gameObjects) {
             this.gameObjects[objectName].update();
         }
+    }
+
+    killPlayer () {
+        if (this.playerLives > 0) {
+            let playerSpawnX = this.physics.world.bounds.centerX;
+            let playerSpawnY = this.physics.world.bounds.centerY;
+
+            this.playerLives--;
+            console.log(`Remaining player lives: ${this.playerLives}`);
+            setTimeout(function (scene) {
+                scene.events.emit('spawnPlayer', playerSpawnX, playerSpawnY);
+            }, this.constructor.PLAYER_RESPAWN_DELAY, this);
+        } else {
+            console.log("GAME OVER");
+        }
+    }
+
+    spawnPlayer (spawnX, spawnY) {
+        this.gameObjects['player'].spawn(spawnX, spawnY);
+        this.addPlayerAsteroidsOverlap();
     }
 
     spawnAsteroids (numOfAsteroids) {
@@ -52,6 +81,13 @@ class Main extends Phaser.Scene {
             [this.constructor.KEEPOUT_ZONE_RADIUS],
             [playerKeepoutZone]
         );
+    }
+
+    addPlayerAsteroidsOverlap () {
+        let player = this.gameObjects['player'];
+        let asteroidsGroup = this.gameObjects['asteroids-group'];
+
+        this.physics.add.overlap(player.sprite, asteroidsGroup.group, player.collideWithAsteroid, null, player);
     }
 
 }

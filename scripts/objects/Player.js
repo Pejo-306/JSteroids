@@ -86,6 +86,8 @@ class Player extends GameObject {
      */
     constructor (game) {
         super(game);
+
+        this.dead = false;
     }
 
     /**
@@ -122,6 +124,7 @@ class Player extends GameObject {
         this.sprite.setDrag(this.constructor.DRAG, this.constructor.DRAG);
         this.sprite.body.setMaxVelocity(this.constructor.MAX_VELOCITY);
         this.sprite.angle = this.constructor.STARTING_ANGLE;
+        this.dead = false;
         return this;
     }
 
@@ -135,28 +138,41 @@ class Player extends GameObject {
      * @since 0.1.0
      */
     update () {
-        let cursors = this.scene.input.keyboard.createCursorKeys();
+        if (!this.dead) {
+            let cursors = this.scene.input.keyboard.createCursorKeys();
 
-        if (cursors.up.isDown) {  // accelerate the player forwards
-            this.scene.physics.velocityFromRotation(
-                this.sprite.rotation, 
-                this.constructor.MAX_VELOCITY,
-                this.sprite.body.acceleration
-            );
-        } else {  // halt the player's acceleration
-            this.sprite.setAcceleration(0);
+            if (cursors.up.isDown) {  // accelerate the player forwards
+                this.scene.physics.velocityFromRotation(
+                    this.sprite.rotation, 
+                    this.constructor.MAX_VELOCITY,
+                    this.sprite.body.acceleration
+                );
+            } else {  // halt the player's acceleration
+                this.sprite.setAcceleration(0);
+            }
+
+            if (cursors.left.isDown) {  // rotate the player counterclockwise
+                this.sprite.setAngularVelocity(-this.constructor.ANGULAR_VELOCITY);
+            } else if (cursors.right.isDown) {  // rotate the player clockwise
+                this.sprite.setAngularVelocity(this.constructor.ANGULAR_VELOCITY);
+            } else {
+                this.sprite.setAngularVelocity(0);
+            }
+
+            // Keep the player within the physics world bounds.
+            this.scene.physics.world.wrap(this.sprite, this.constructor.WRAP_PADDING);
         }
+    }
 
-        if (cursors.left.isDown) {  // rotate the player counterclockwise
-            this.sprite.setAngularVelocity(-this.constructor.ANGULAR_VELOCITY);
-        } else if (cursors.right.isDown) {  // rotate the player clockwise
-            this.sprite.setAngularVelocity(this.constructor.ANGULAR_VELOCITY);
-        } else {
-            this.sprite.setAngularVelocity(0);
-        }
+    collideWithAsteroid (player, asteroid) {
+        this.death();
+    }
 
-        // Keep the player within the physics world bounds.
-        this.scene.physics.world.wrap(this.sprite, this.constructor.WRAP_PADDING);
+    death () {
+        // TODO: add death animation
+        this.dead = true;
+        this.sprite.destroy();
+        this.scene.killPlayer();
     }
 
 }
