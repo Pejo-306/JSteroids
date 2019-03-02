@@ -57,6 +57,10 @@ class GameObject {
         throw new Error(`${this.constructor.name}: must implement abstract method update()`);
     }
 
+    destroy () {
+        throw new Error(`${this.constructor.name}: must implement abstract method destroy()`);
+    }
+
     /**
      * Get current game scene.
      *

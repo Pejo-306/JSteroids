@@ -44,6 +44,13 @@ class Main extends Phaser.Scene {
         this.spawnPlayer(playerSpawnX, playerSpawnY);
         this.spawnAsteroids(5);
         this.addPlayerAsteroidsOverlap();
+        this.physics.add.collider(
+            projectilesGroup.group, 
+            asteroidsGroup.group,
+            this.destroyAsteroid,
+            null,
+            this
+        );
         this.events.on('spawnPlayer', this.spawnPlayer, this);
         this.initializeControls();
     }
@@ -67,6 +74,16 @@ class Main extends Phaser.Scene {
         } else {
             console.log("GAME OVER");
         }
+    }
+
+    destroyAsteroid (projectileSprite, asteroidSprite) {
+        let projectile = this.gameObjects['projectiles-group'].memberObjects
+            .get('sprite', projectileSprite);
+        let asteroid = this.gameObjects['asteroids-group'].memberObjects
+            .get('sprite', asteroidSprite);
+
+        projectile.destroy();
+        asteroid.destroy();
     }
 
     initializeControls () {

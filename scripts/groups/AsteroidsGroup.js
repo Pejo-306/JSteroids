@@ -18,10 +18,10 @@ class AsteroidsGroup extends PhysicsGroup {
         Asteroid.preload(scene);
     }
 
-    spawn (x, y, level) {
+    spawn (x, y, level, velocity = null) {
         let asteroid = new Asteroid(this.game, this, level);
 
-        asteroid.spawn(x, y);
+        asteroid.spawn(x, y, velocity);
         this.addMember(asteroid);
     }
 
@@ -43,8 +43,24 @@ class AsteroidsGroup extends PhysicsGroup {
         }
     }
 
+    destroyMember (memberObject) {
+        let newAsteroidsLevel = memberObject.level + 1;
+        
+        if (newAsteroidsLevel <= Asteroid.MAX_LEVEL) {
+            let velocity = new Phaser.Math.Vector2(
+                Asteroid.generateVelocityValue(newAsteroidsLevel),
+                Asteroid.generateVelocityValue(newAsteroidsLevel)
+            );
+            let oppositeVelocity = new Phaser.Math.Vector2(-velocity.x, -velocity.y);
+
+            this.spawn(memberObject.sprite.x, memberObject.sprite.y, newAsteroidsLevel, velocity);
+            this.spawn(memberObject.sprite.x, memberObject.sprite.y, newAsteroidsLevel, oppositeVelocity);
+        }
+        super.destroyMember(memberObject);
+    }
+
     update () {
-        for (let asteroid of this.memberObjects) {
+        for (let asteroid of this.memberObjects.entries) {
             asteroid.update();
         }
     }

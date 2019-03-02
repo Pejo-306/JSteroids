@@ -35,25 +35,40 @@ class Asteroid extends GroupGameObject {
         }
     }
 
-    spawn (x, y) {
-        let velocityX = generateRandomInteger(
-            this.constructor.MIN_BASE_VELOCITY * this.levelMultiplier, 
-            this.constructor.MAX_BASE_VELOCITY * this.levelMultiplier
+    static generateVelocityValue (multiplier) {
+        let velocityValue = generateRandomInteger(
+            this.MIN_BASE_VELOCITY * multiplier, 
+            this.MAX_BASE_VELOCITY * multiplier
         );
-        let velocityY = generateRandomInteger(
-            this.constructor.MIN_BASE_VELOCITY * this.levelMultiplier,
-            this.constructor.MAX_BASE_VELOCITY * this.levelMultiplier
-        );
+
+        return velocityValue;
+    }
+
+    spawn (x, y, velocity = null) {
         let spriteAsset = `asteroid_${this.level.toString().padStart(2, '0')}`;
 
+        if (velocity == null) {
+            velocity = new Phaser.Math.Vector2();
+            velocity.x = this.generateVelocityValue();
+            velocity.y = this.generateVelocityValue(); 
+        }
         this.sprite = this.group.create(x, y, spriteAsset);
         this.sprite.body.setAllowGravity(false);
-        this.sprite.body.setVelocity(velocityX, velocityY);
+        this.sprite.body.velocity = velocity;
         return this;
     }
 
     update () {
         this.scene.physics.world.wrap(this.sprite, this.constructor.WRAP_PADDING);
+    }
+
+    destroy () {
+        this.group.remove(this.sprite, true, true);
+        this.physicsGroup.destroyMember(this);
+    }
+
+    generateVelocityValue () {
+        return this.constructor.generateVelocityValue(this.levelMultiplier);
     }
 
     get levelMultiplier () {

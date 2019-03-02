@@ -9,7 +9,7 @@ class PhysicsGroup {
 
         this.game = game;
         this.spriteGroup = null;
-        this.memberObjects = new Set();
+        this.memberObjects = new Phaser.Structs.Set();
     }
 
     static preload (scene) {
@@ -25,11 +25,11 @@ class PhysicsGroup {
     }
 
     addMember (gameObject) {
-        this.memberObjects.add(gameObject);
+        this.memberObjects.set(gameObject);
     }
 
-    destroyMember (gameObject) {
-        this.memberObjects.delete(gameObject); 
+    destroyMember (memberObject) {
+        this.memberObjects.delete(memberObject); 
     }
 
     get group () {

@@ -25,7 +25,7 @@ class ProjectilesGroup extends PhysicsGroup {
     }
 
     update () {
-        for (let projectile of this.memberObjects) {
+        for (let projectile of this.memberObjects.entries) {
             projectile.update();
         }
     }

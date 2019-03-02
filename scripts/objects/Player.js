@@ -179,6 +179,10 @@ class Player extends GameObject {
         }
     }
 
+    destroy () {
+        // Do nothing
+    }
+
     fireProjectile () {
         this.projectilesGroup.spawn(this.sprite.x, this.sprite.y, this.sprite.angle);
     }
