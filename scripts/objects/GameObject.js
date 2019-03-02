@@ -25,6 +25,7 @@ class GameObject {
         }
 
         this.game = game;
+        this.sprite = null;
     }
 
     /**

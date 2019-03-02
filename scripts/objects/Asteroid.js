@@ -1,14 +1,14 @@
 import 'phaser';
 
-import GameObject from './GameObject.js';
+import GroupGameObject from './GroupGameObject.js';
 import { generateRandomInteger } from '../helper/random.js';
 
-class Asteroid extends GameObject {
+class Asteroid extends GroupGameObject {
+
+    static get WRAP_PADDING () { return 32; }
 
     constructor (game, group) {
-        super(game);
-
-        this.group = group;
+        super(game, group);
     }
 
     static preload (scene) {
@@ -18,16 +18,17 @@ class Asteroid extends GameObject {
     }
 
     spawn (x, y) {
-        let asteroid = this.group.create(x, y, 'asteroid_01');
         let velocityX = generateRandomInteger (10, 100);
         let velocityY = generateRandomInteger(10, 100);
 
-        asteroid.body.setAllowGravity(false);
-        asteroid.body.setVelocity(velocityX, velocityY);
+        this.sprite = this.group.create(x, y, 'asteroid_01');
+        this.sprite.body.setAllowGravity(false);
+        this.sprite.body.setVelocity(velocityX, velocityY);
+        return this;
     }
 
     update () {
-
+        this.scene.physics.world.wrap(this.sprite, this.constructor.WRAP_PADDING);
     }
 
 }

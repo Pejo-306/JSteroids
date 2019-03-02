@@ -86,8 +86,6 @@ class Player extends GameObject {
      */
     constructor (game) {
         super(game);
-
-        this.sprite = null;
     }
 
     /**
