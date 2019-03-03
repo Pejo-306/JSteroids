@@ -1,10 +1,20 @@
 /**
- * Generate a random integer.
+ * @author       Petar Nikolov <penikolov23@gmail.com>
+ * @copyright    2019 Petar Nikolov
+ * @license      {@link https://github.com/Pejo-306/JSteroids/blob/master/LICENSE|MIT License}
+ */
+
+/**
+ * Generate a random integer inside of a specified range.
  *
- * @param {number} min Minimum value of interval (inclusive)
- * @param {number} max Maximum value of interval (inclusive)
- * @param {boolean} signed Can the generated integer be negative
- * @returns {number}
+ * @function generateRandomInteger
+ * @since 0.1.0
+ *
+ * @param {number} min - Minimum value of interval (inclusive).
+ * @param {number} max - Maximum value of interval (inclusive).
+ * @param {boolean} signed - Can the generated integer be negative.
+ *
+ * @returns {number} The new randomly generated value.
  */
 export function generateRandomInteger(min, max, signed = true) {
     let sign = signed ? (Math.random() < 0.5 ? -1 : 1) : 1;
