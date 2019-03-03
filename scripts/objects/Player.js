@@ -17,6 +17,7 @@ import GameObject from './GameObject.js';
  * in space and may shoot at objects.
  *
  * @class Player
+ * @extends GameObject
  * @since 0.1.0
  */
 class Player extends GameObject {
@@ -115,7 +116,7 @@ class Player extends GameObject {
     /**
      * Padding added to each world boundary edge.
      * 
-     * @public
+     * @private
      * @static
      * @readonly
      * @method Player.WRAP_PADDING

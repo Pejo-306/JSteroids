@@ -18,6 +18,7 @@ import GroupGameObject from './GroupGameObject.js';
  * asteroid are destroyed.
  *
  * @class Projectile
+ * @extends GropGameObject
  * @since 0.1.0
  */
 class Projectile extends GroupGameObject {
@@ -51,7 +52,7 @@ class Projectile extends GroupGameObject {
     /**
      * Padding added to each world boundary edge.
      * 
-     * @public
+     * @private
      * @static
      * @readonly
      * @method Projectile.WRAP_PADDING

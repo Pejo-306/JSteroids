@@ -13,6 +13,7 @@ import Projectile from '../objects/Projectile.js';
  * Projectile group to hold all Projectile game objects.
  *
  * @class ProjectilesGroup
+ * @extends PhysicsGroup
  * @since 0.1.0
  */
 class ProjectilesGroup extends PhysicsGroup {
