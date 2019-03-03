@@ -1,23 +1,38 @@
+/**
+ * @author       Petar Nikolov <penikolov23@gmail.com>
+ * @copyright    2019 Petar Nikolov
+ * @license      {@link https://github.com/Pejo-306/JSteroids/blob/master/LICENSE|MIT License}
+ */
+
 import 'phaser';
 
 /**
- * (abstract) Base class for all game objects.
+ * Base class for all game objects.
  *
- * This abstract class mainly declares some common interface methods that
- * should be implemented by every game object. Attempting to create an instance
- * of this class or calling an interface method throws an error.
+ * This abstract class declares some common interface methods that should be 
+ * implemented by every game object. This includes: preloading all required
+ * assets for objects of this type, spawning the object inside the game world, 
+ * executing its behavioral code every game loop iteration, destroying the
+ * game object and removing it from the game world.
+ *
+ * Attempting to create an instance of this class or calling an interface 
+ * method throws an error.
+ *
+ * @abstract
+ * @class GameObject
+ * @since 0.1.0
  */
 class GameObject {
 
     /**
      * Consturct game object.
      *
-     * Each game object holds a reference to the Phaser game instance.
+     * @constructor
+     * @since 0.1.0
      *
-     * Since this class is abstract in nature, attempting to create an instance
-     * of this base GameObject class throws an error.
+     * @throws {TypeError} Cannot construct object of this abstract type.
      *
-     * @param {Game} game Reference to the Phaser game instance
+     * @param {Game} game - Reference to the Phaser game instance.
      */
     constructor (game) {
         if (new.target === GameObject) {
@@ -29,34 +44,66 @@ class GameObject {
     }
 
     /**
-     * (abstract) Preload all resources needed by the game object.
+     * Preload all resources needed by the game object.
      *
-     * @param {Phaser.Scene} scene The current game scene
+     * @public
+     * @abstract
+     * @static
+     * @method GameObject.preload
+     * @since 0.1.0
+     *
+     * @throws {Error} Must be implemented by subclass.
+     *
+     * @param {Phaser.Scene} scene - The current game scene.
      */
     static preload (scene) {
         throw new Error(`${this.name}: must implement abstract static method preload()`);
     }
 
     /**
-     * (abstract) Spawn game object in the game world.
+     * Spawn game object in the game world.
      *
-     * @param {number} x X coordinates of spawn position
-     * @param {number} y Y coordinates of spawn position
+     * @public
+     * @abstract
+     * @method GameObject#spawn
+     * @since 0.1.0
+     *
+     * @throws {Error} Must be implemented by subclass.
+     *
+     * @param {number} x - X coordinates of spawn position.
+     * @param {number} y - Y coordinates of spawn position.
      */
     spawn (x, y) {
         throw new Error(`${this.constructor.name}: must implement abstract method spawn()`);
     }
 
     /**
-     * (abstract) Game object's behavioural code. Executed on each game loop iteration.
+     * Game object's behavioural code. Executed on each game loop iteration.
      *
      * This is where game object controls, as well as dynamic manipulation in
      * general should go.
+     *
+     * @throws {Error} Must be implemented by subclass.
+     *
+     * @public
+     * @abstract
+     * @method GameObject#update
+     * @since 0.1.0
      */
     update () {
         throw new Error(`${this.constructor.name}: must implement abstract method update()`);
     }
 
+    /**
+     * Destroy this game object and all of its associated assets.
+     *
+     * @throws {Error} Must be implemented by subclass.
+     *
+     * @public
+     * @abstract
+     * @method GameObject#destroy
+     * @since 0.1.0
+     */
     destroy () {
         throw new Error(`${this.constructor.name}: must implement abstract method destroy()`);
     }
@@ -64,8 +111,11 @@ class GameObject {
     /**
      * Get current game scene.
      *
-     * This method is intended to be used within the derived game object's
-     * implementation.
+     * @protected
+     * @method GameObject#scene
+     * @since 0.1.0
+     *
+     * @return {Phaser.Scene} The currently loaded game scene.
      */
     get scene () {
         return this.game.currentScene;
