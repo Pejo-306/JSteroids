@@ -170,6 +170,7 @@ class Player extends GameObject {
      *
      * @param {number} x - X coordinates of spawn position.
      * @param {number} y - Y coordinates of spawn position.
+     * @param {boolean} invincible - Give temporary invincibility.
      *
      * @return {Player} This player instance.
      */
