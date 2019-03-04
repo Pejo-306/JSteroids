@@ -241,19 +241,6 @@ class Asteroid extends GroupGameObject {
     }
 
     /**
-     * Destroy asteroid and remove instance reference from asteroids' group.
-     *
-     * @public
-     * @override
-     * @method Asteroid#destroy
-     * @since 0.1.0
-     */
-    destroy () {
-        this.group.remove(this.sprite, true, true);
-        this.physicsGroup.destroyMember(this);
-    }
-
-    /**
      * Generate a random velocity value for this asteroid.
      *
      * This method is a mirror of its static counterpart. The latter is

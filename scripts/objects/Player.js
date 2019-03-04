@@ -304,7 +304,6 @@ class Player extends GameObject {
      * @since 0.1.0
      */
     death () {
-        // TODO: add death animation
         this.dead = true;
         this.sprite.destroy();
         this.scene.killPlayer();

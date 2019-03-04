@@ -91,22 +91,6 @@ class ExplosionsGroup extends PhysicsGroup {
         return this;
     }
 
-    /**
-     * ExplosionsGroup's behavioural code that is executed on each game loop iteration.
-     *
-     * Each associated explosion's update() method is executed sequencially.
-     *
-     * @public
-     * @override
-     * @method ExplosionsGroup#update
-     * @since 0.1.0
-     */
-    update () {
-        for (let explosion of this.memberObjects.entries) {
-            explosion.update();
-        }
-    }    
-
 }
 
 export default ExplosionsGroup;

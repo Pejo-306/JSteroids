@@ -139,19 +139,6 @@ class Projectile extends GroupGameObject {
         this.scene.physics.world.wrap(this.sprite, this.constructor.WRAP_PADDING);
     }
 
-    /**
-     * Destroy projectile and remove instance reference from projectiles' group.
-     *
-     * @public
-     * @override
-     * @method Projectile#destroy
-     * @since 0.1.0
-     */
-    destroy () {
-        this.group.remove(this.sprite, true, true);
-        this.physicsGroup.destroyMember(this);
-    }
-
 }
 
 export default Projectile;

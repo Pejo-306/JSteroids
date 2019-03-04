@@ -80,15 +80,16 @@ class PhysicsGroup {
     /**
      * PhysicsGroup's descendant behavioural code that is executed on each game loop iteration.
      *
+     * The method's default implementation calls each member's 'update()' method.
+     *
      * @public
-     * @abstract
      * @method PhysicsGroup#update
      * @since 0.1.0
-     *
-     * @throws {Error} Must be implemented by subclass.
      */
     update () {
-        throw new Error(`${this.constructor.name}: must implement abstract method update()`);
+        for (let member of this.memberObjects.entries) {
+            member.update();
+        }
     }
 
     /**

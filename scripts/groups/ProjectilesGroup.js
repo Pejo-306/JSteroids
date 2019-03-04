@@ -71,22 +71,6 @@ class ProjectilesGroup extends PhysicsGroup {
         return this;
     }
 
-    /**
-     * ProjectilesGroup's behavioural code that is executed on each game loop iteration.
-     *
-     * Each associated projectile's update() method is executed sequencially.
-     *
-     * @public
-     * @override
-     * @method ProjectilesGroup#update
-     * @since 0.1.0
-     */
-    update () {
-        for (let projectile of this.memberObjects.entries) {
-            projectile.update();
-        }
-    }
-
 }
 
 export default ProjectilesGroup;

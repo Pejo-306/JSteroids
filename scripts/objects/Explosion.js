@@ -118,19 +118,6 @@ class Explosion extends GroupGameObject {
     }
 
     /**
-     * Destroy explosion object and remove instance reference from explosions' group.
-     *
-     * @public
-     * @override
-     * @method Explosion#destroy
-     * @since 0.1.0
-     */
-    destroy () {
-        this.group.remove(this.sprite, true, true);
-        this.physicsGroup.destroyMember(this);
-    }
-
-    /**
      * Setup explosion animation.
      *
      * @private

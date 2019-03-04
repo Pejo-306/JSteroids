@@ -42,6 +42,22 @@ class GroupGameObject extends GameObject {
     }
 
     /**
+     * Destroy this group game object.
+     *
+     * The method's default implementation destroys this game object and
+     * removes its reference from its associated PhysicsGroup.
+     *
+     * @public
+     * @override
+     * @method GroupGameObject#destroy
+     * @since 0.1.0
+     */
+    destroy () {
+        this.group.remove(this.sprite, true, true);
+        this.physicsGroup.destroyMember(this);
+    }
+
+    /**
      * Get reference to associated PhysicsGroup object's Phaser 3 group.
      *
      * @protected

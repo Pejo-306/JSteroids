@@ -113,22 +113,6 @@ class AsteroidsGroup extends PhysicsGroup {
     }
 
     /**
-     * AsteroidsGroup's behavioural code that is executed on each game loop iteration.
-     *
-     * Each associated asteroid's update() method is executed sequencially.
-     *
-     * @public
-     * @override
-     * @method AsteroidsGroup#update
-     * @since 0.1.0
-     */
-    update () {
-        for (let asteroid of this.memberObjects.entries) {
-            asteroid.update();
-        }
-    }
-
-    /**
      * Destroy an Asteroid member object of this group.
      *
      * In addition to destroying the specified asteroid, this method also
