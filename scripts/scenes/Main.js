@@ -15,6 +15,8 @@ class Main extends Phaser.Scene {
 
     static get PLAYER_RESPAWN_DELAY () { return 2000; }
 
+    static get ASTEROID_SPAWN_DELAY () { return 1500; } // in ms
+
     /**
      * Construct the main Phaser scene which contains the gameplay.
      */
@@ -24,6 +26,7 @@ class Main extends Phaser.Scene {
         this.gameObjects = {};
         this.playerLives = this.constructor.PLAYER_LIVES;
         this.controls = {};
+        this.spawnedAsteroids = 0;
     }
 
     /**
@@ -88,6 +91,10 @@ class Main extends Phaser.Scene {
         this.gameObjects['explosions-group'].spawnExplosionBetweenObjects(projectile, asteroid);
         projectile.destroy();
         asteroid.destroy();
+
+        if (this.gameObjects['asteroids-group'].memberObjects.size == 0) {
+            this.spawnAsteroids(this.spawnedAsteroids * this.difficultyMultiplier);
+        }
     }
 
     initializeControls () {
@@ -111,12 +118,15 @@ class Main extends Phaser.Scene {
             this.constructor.KEEPOUT_ZONE_RADIUS / 2,
             this.constructor.KEEPOUT_ZONE_RADIUS / 4,
         ];
+        let asteroidsGroup = this.gameObjects['asteroids-group'];
 
-        this.gameObjects['asteroids-group'].spawnMultiple(
-            numOfAsteroids, 
-            keepoutZoneRadii,
-            [playerKeepoutZone]
-        );
+        this.spawnedAsteroids = numOfAsteroids;
+        this.time.addEvent({
+            delay: this.constructor.ASTEROID_SPAWN_DELAY,
+            callback: asteroidsGroup.spawnMultiple,
+            args: [numOfAsteroids, keepoutZoneRadii, [playerKeepoutZone]],
+            callbackScope: asteroidsGroup
+        });
     }
 
     addPlayerAsteroidsOverlap () {
@@ -124,6 +134,10 @@ class Main extends Phaser.Scene {
         let asteroidsGroup = this.gameObjects['asteroids-group'];
 
         this.physics.add.overlap(player.sprite, asteroidsGroup.group, player.collideWithAsteroid, null, player);
+    }
+
+    get difficultyMultiplier () {
+        return 1.5;
     }
 
 }
