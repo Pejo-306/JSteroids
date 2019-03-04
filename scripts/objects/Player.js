@@ -272,7 +272,8 @@ class Player extends GameObject {
      * Handle a collision between the player and an asteroid.
      *
      * If the player is not in state of temporary invincibility, the colliding
-     * asteroid is destroyed while the player is killed.
+     * asteroid is destroyed while the player is killed. An explosion VFX is
+     * displayed.
      *
      * @public
      * @callback Player~collideWithAsteroid
@@ -287,6 +288,7 @@ class Player extends GameObject {
             let asteroid = this.scene.gameObjects['asteroids-group'].memberObjects
                 .get('sprite', asteroidSprite);
 
+            this.scene.gameObjects['explosions-group'].spawnExplosionBetweenObjects(this, asteroid);
             this.death();
             asteroid.destroy();
         }

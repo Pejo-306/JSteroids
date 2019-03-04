@@ -2,6 +2,7 @@ import 'phaser';
 
 import AsteroidsGroup from '../groups/AsteroidsGroup.js';
 import ProjectilesGroup from '../groups/ProjectilesGroup.js';
+import ExplosionsGroup from '../groups/ExplosionsGroup.js';
 import Player from '../objects/Player.js';
 
 import KeepoutZone from '../helper/KeepoutZone.js';
@@ -31,12 +32,14 @@ class Main extends Phaser.Scene {
     preload () {
         AsteroidsGroup.preload(this);
         ProjectilesGroup.preload(this);
+        ExplosionsGroup.preload(this);
         Player.preload(this);
     }
     
     create () {
         let asteroidsGroup = this.gameObjects['asteroids-group'] = new AsteroidsGroup(this.game);
         let projectilesGroup = this.gameObjects['projectiles-group'] = new ProjectilesGroup(this.game);
+        let explosionsGroup = this.gameObjects['explosions-group'] = new ExplosionsGroup(this.game);
         let player = this.gameObjects['player'] = new Player(this.game, projectilesGroup);
         let playerSpawnX = this.physics.world.bounds.centerX;
         let playerSpawnY = this.physics.world.bounds.centerY;
@@ -82,6 +85,7 @@ class Main extends Phaser.Scene {
         let asteroid = this.gameObjects['asteroids-group'].memberObjects
             .get('sprite', asteroidSprite);
 
+        this.gameObjects['explosions-group'].spawnExplosionBetweenObjects(projectile, asteroid);
         projectile.destroy();
         asteroid.destroy();
     }
