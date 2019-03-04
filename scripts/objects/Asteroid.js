@@ -78,6 +78,36 @@ class Asteroid extends GroupGameObject {
     static get MAX_BASE_VELOCITY () { return 100; }
 
     /**
+     * Minimum base angular velocity of asteroids.
+     *
+     * Value is used to set the constant rotation of asteroid sprite.
+     *
+     * @public
+     * @static
+     * @readonly
+     * @method Asteroid.MIN_BASE_ANGULAR_VELOCITY
+     * @since 0.1.0
+     *
+     * @return {number} Min value of base angular velocity.
+     */
+    static get MIN_BASE_ANGULAR_VELOCITY () { return 50; }
+
+    /**
+     * Maximum base angular velocity of asteroids.
+     *
+     * Value is used to set the constant rotation of asteroid sprite.
+     *
+     * @public
+     * @static
+     * @readonly
+     * @method Asteroid.MAX_BASE_ANGULAR_VELOCITY
+     * @since 0.1.0
+     *
+     * @return {number} Max value of base angular velocity.
+     */
+    static get MAX_BASE_ANGULAR_VELOCITY () { return 100; }
+
+    /**
      * Padding added to each world boundary edge.
      * 
      * @private
@@ -163,6 +193,9 @@ class Asteroid extends GroupGameObject {
      * Spawn an Asteroid instance in the game world.
      *
      * The new asteroid's sprite and velocity comply with the asteroid's level.
+     * The new game object's sprite is given a constant rotational force. The
+     * latter is described via the sprite's angular velocity which is set to
+     * a randomly generated value.
      *
      * @public
      * @override
@@ -177,6 +210,10 @@ class Asteroid extends GroupGameObject {
      */
     spawn (x, y, velocity = null) {
         let spriteAsset = `asteroid_${this.level.toString().padStart(2, '0')}`;
+        let angularVelocity = this.levelMultiplier * generateRandomInteger(
+            this.constructor.MIN_BASE_ANGULAR_VELOCITY,
+            this.constructor.MAX_BASE_ANGULAR_VELOCITY
+        );
 
         if (velocity == null) {  // randomly calculate velocity on the spot
             velocity = new Phaser.Math.Vector2();
@@ -185,6 +222,7 @@ class Asteroid extends GroupGameObject {
         }
         this.sprite = this.group.create(x, y, spriteAsset);
         this.sprite.body.velocity = velocity;
+        this.sprite.setAngularVelocity(angularVelocity);
         return this;
     }
 
