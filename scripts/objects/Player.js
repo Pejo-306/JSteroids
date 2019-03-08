@@ -226,7 +226,7 @@ class Player extends GameObject {
             }
 
             // Fire a projectile
-            if (this.scene.controls.spacebar.isDown && this.canFire) {
+            if (this.scene.controls.cursors.space.isDown && this.canFire) {
                 this.fireProjectile();
                 // Prevent the player firing again until <1 / FIRE_RATE>
                 // seconds have passed
