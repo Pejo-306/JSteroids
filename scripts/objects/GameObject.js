@@ -20,7 +20,7 @@ import 'phaser';
  *
  * @abstract
  * @class GameObject
- * @since 0.1.0
+ * @since v1.0.0-alpha
  */
 class GameObject {
 
@@ -28,7 +28,7 @@ class GameObject {
      * Consturct game object.
      *
      * @constructor
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      *
      * @throws {TypeError} Cannot construct object of this abstract type.
      *
@@ -50,7 +50,7 @@ class GameObject {
      * @abstract
      * @static
      * @method GameObject.preload
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      *
      * @throws {Error} Must be implemented by subclass.
      *
@@ -66,7 +66,7 @@ class GameObject {
      * @public
      * @abstract
      * @method GameObject#spawn
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      *
      * @throws {Error} Must be implemented by subclass.
      *
@@ -88,7 +88,7 @@ class GameObject {
      * @public
      * @abstract
      * @method GameObject#update
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      */
     update () {
         throw new Error(`${this.constructor.name}: must implement abstract method update()`);
@@ -102,7 +102,7 @@ class GameObject {
      * @public
      * @abstract
      * @method GameObject#destroy
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      */
     destroy () {
         throw new Error(`${this.constructor.name}: must implement abstract method destroy()`);
@@ -113,7 +113,7 @@ class GameObject {
      *
      * @protected
      * @method GameObject#scene
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      *
      * @return {Phaser.Scene} The currently loaded game scene.
      */

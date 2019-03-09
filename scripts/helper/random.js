@@ -8,7 +8,7 @@
  * Generate a random integer inside of a specified range.
  *
  * @function generateRandomInteger
- * @since 0.1.0
+ * @since v1.0.0-alpha
  *
  * @param {number} min - Minimum value of interval (inclusive).
  * @param {number} max - Maximum value of interval (inclusive).

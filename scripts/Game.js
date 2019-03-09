@@ -19,7 +19,7 @@ import Main from './scenes/Main.js';
  *
  * @class Game
  * @extends Phaser.Game
- * @since 0.1.0
+ * @since v1.0.0-alpha
  */
 class Game extends Phaser.Game {
 
@@ -30,7 +30,7 @@ class Game extends Phaser.Game {
      * instance. Afterwards, the game begins at the 'Boot' scene.
      *
      * @constructor
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      *
      * @param {object} config - Configuration options for Phaser game instance.
      */
@@ -54,7 +54,7 @@ class Game extends Phaser.Game {
      *
      * @public
      * @method Game#switchScene
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      *
      * @param {string} name - Reference to scene.
      */
@@ -68,7 +68,7 @@ class Game extends Phaser.Game {
      *
      * @public
      * @method Game#currentScene
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      *
      * @return {Phaser.Scene} The currently loaded scene.
      */

@@ -26,7 +26,7 @@ import KeepoutZone from '../helper/KeepoutZone.js';
  *
  * @class Main
  * @extends Phaser.Scene
- * @since 0.1.0
+ * @since v1.0.0-alpha
  */
 class Main extends Phaser.Scene {
 
@@ -37,7 +37,7 @@ class Main extends Phaser.Scene {
      * @static
      * @readonly
      * @method Main.KEEPOUT_ZONE_RADIUS
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      *
      * @return {number} Radius of base keepout zones.
      */
@@ -50,7 +50,7 @@ class Main extends Phaser.Scene {
      * @static
      * @readonly
      * @method Main.PLAYER_LIVES
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      *
      * @return {number} Amount of player's lives.
      */
@@ -63,7 +63,7 @@ class Main extends Phaser.Scene {
      * @static
      * @readonly
      * @method Main.PLAYER_RESPAWN_DELAY
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      *
      * @return {number} Delay before player respawn.
      */
@@ -76,7 +76,7 @@ class Main extends Phaser.Scene {
      * @static
      * @readonly
      * @method Main.PLAYER_RESPAWN_DELAY
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      *
      * @return {number} Delay before asteroid wave spawn.
      */
@@ -86,7 +86,7 @@ class Main extends Phaser.Scene {
      * Construct main game scene.
      *
      * @constructor
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      */
     constructor () {
         super();
@@ -103,7 +103,7 @@ class Main extends Phaser.Scene {
      * @public
      * @override
      * @method Main#preload
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      */
     preload () {
         AsteroidsGroup.preload(this);
@@ -129,7 +129,7 @@ class Main extends Phaser.Scene {
      * @public
      * @override
      * @method Main#create
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      */
     create () {
         let asteroidsGroup = this.gameObjects['asteroids-group'] = new AsteroidsGroup(this.game);
@@ -161,7 +161,7 @@ class Main extends Phaser.Scene {
      * @public
      * @override
      * @method Main#update
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      */
     update () {
         for (let objectName in this.gameObjects) {
@@ -177,7 +177,7 @@ class Main extends Phaser.Scene {
      *
      * @private
      * @method Main#killPlayer
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      */
     killPlayer () {
         if (this.playerLives > 0) {
@@ -211,7 +211,7 @@ class Main extends Phaser.Scene {
      * @private
      * @callback Main~destroyAsteroid
      * @method Main#destroyAsteroid
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      *
      * @param {Phaser.GameObjects.Sprite} projectileSprite - The projectile's colliding sprite.
      * @param {Phaser.GameObjects.Sprite} asteroidSprite - The asteroid's colliding sprite.
@@ -237,7 +237,7 @@ class Main extends Phaser.Scene {
      *
      * @private
      * @method Main#initializeControls
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      */
     initializeControls () {
         this.controls.cursors = this.input.keyboard.createCursorKeys();
@@ -248,7 +248,7 @@ class Main extends Phaser.Scene {
      *
      * @private
      * @method Main#spawnPlayer
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      *
      * @param {number} x - X coordinates of player spawn point.
      * @param {number} y - Y coordinates of player spawn point.
@@ -271,7 +271,7 @@ class Main extends Phaser.Scene {
      * 
      * @private
      * @method Main#spawnAsteroids
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      *
      * @param {number} numOfAsteroids - Number of asteroids to spawn.
      */
@@ -305,7 +305,7 @@ class Main extends Phaser.Scene {
      *
      * @private
      * @method Main#addPlayerAsteroidsOverlap
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      */
     addPlayerAsteroidsOverlap () {
         let player = this.gameObjects['player'];
@@ -319,7 +319,7 @@ class Main extends Phaser.Scene {
      *
      * @private
      * @method Main#difficultyMultiplier
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      *
      * @return {number} Difficulty multiplier.
      */

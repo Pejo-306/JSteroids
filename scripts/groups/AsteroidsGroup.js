@@ -18,7 +18,7 @@ import { generateRandomInteger } from '../helper/random.js';
  *
  * @class AsteroidsGroup
  * @extends PhysicsGroup
- * @since 0.1.0
+ * @since v1.0.0-alpha
  */
 class AsteroidsGroup extends PhysicsGroup {
 
@@ -26,7 +26,7 @@ class AsteroidsGroup extends PhysicsGroup {
      * Construct asteroids group game object.
      *
      * @constructor
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      *
      * @param {Game} game - Reference to the Phaser game instance.
      */
@@ -45,7 +45,7 @@ class AsteroidsGroup extends PhysicsGroup {
      * @static
      * @override
      * @method AsteroidsGroup.preload
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      *
      * @param {Phaser.Scene} scene - The current game scene.
      */
@@ -59,7 +59,7 @@ class AsteroidsGroup extends PhysicsGroup {
      * @public
      * @override
      * @method AsteroidsGroup#spawn
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      *
      * @param {number} x - X coordinates of spawn position.
      * @param {number} y - Y coordinates of spawn position.
@@ -86,7 +86,7 @@ class AsteroidsGroup extends PhysicsGroup {
      *
      * @public
      * @method AsteroidsGroup#spawnMultiple
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      *
      * @param {number} numOfAsteroids - Number of asteroids to spawn.
      * @param {array} radii - Keepout zones' radii for different asteroids levels.
@@ -123,7 +123,7 @@ class AsteroidsGroup extends PhysicsGroup {
      * @public
      * @override
      * @method AsteroidsGroup#destroyMember
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      *
      * @param {Asteroid} memberObject - The member asteroid which is to be removed from this group.
      */

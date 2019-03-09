@@ -14,7 +14,7 @@ import Projectile from '../objects/Projectile.js';
  *
  * @class ProjectilesGroup
  * @extends PhysicsGroup
- * @since 0.1.0
+ * @since v1.0.0-alpha
  */
 class ProjectilesGroup extends PhysicsGroup {
 
@@ -22,7 +22,7 @@ class ProjectilesGroup extends PhysicsGroup {
      * Construct projectiles group game object.
      *
      * @constructor
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      *
      * @param {Game} game - Reference to the Phaser game instance.
      */
@@ -41,7 +41,7 @@ class ProjectilesGroup extends PhysicsGroup {
      * @static
      * @override
      * @method ProjectilesGroup.preload
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      *
      * @param {Phaser.Scene} scene - The current game scene.
      */
@@ -55,7 +55,7 @@ class ProjectilesGroup extends PhysicsGroup {
      * @public
      * @override
      * @method ProjectilesGroup#spawn
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      *
      * @param {number} x - X coordinates of spawn position.
      * @param {number} y - Y coordinates of spawn position.

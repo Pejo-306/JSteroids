@@ -16,7 +16,7 @@ import 'phaser';
  * only check whether an object is inside it.
  *
  * @class KeepoutZone
- * @since 0.1.0
+ * @since v1.0.0-alpha
  */
 class KeepoutZone {
     
@@ -24,7 +24,7 @@ class KeepoutZone {
      * Consturct keepout zone.
      *
      * @constructor
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      *
      * @param {number} x - X coordinates of zone origin.
      * @param {number} y - Y coordinates of zone origin.
@@ -39,7 +39,7 @@ class KeepoutZone {
      *
      * @public
      * @method KeepoutZone#contains
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      *
      * @param {number} x - X coordinates of checked point.
      * @param {number} y - Y coordinates of checked point.

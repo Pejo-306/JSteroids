@@ -17,7 +17,7 @@ import GroupGameObject from './GroupGameObject.js';
  *
  * @class Explosion 
  * @extends GroupGameObject
- * @since 0.1.0
+ * @since v1.0.0-alpha
  */
 class Explosion extends GroupGameObject {
 
@@ -28,7 +28,7 @@ class Explosion extends GroupGameObject {
      * @static
      * @readonly
      * @method Explosion.SPRITESHEET_FRAMES
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      *
      * @return {number} Number of spritesheet frames.
      */
@@ -41,7 +41,7 @@ class Explosion extends GroupGameObject {
      * @static
      * @readonly
      * @method Explosion.FRAME_RATE
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      *
      * @return {number} Frame rate of explosion animation.
      */
@@ -51,7 +51,7 @@ class Explosion extends GroupGameObject {
      * Construct explosion game object.
      *
      * @constructor
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      *
      * @param {Game} game - Reference to the Phaser game instance.
      * @param {PhysicsGroup} physicsGroup - Reference to PhysicsGroup which owns this object.
@@ -67,7 +67,7 @@ class Explosion extends GroupGameObject {
      * @static
      * @override
      * @method Explosion.preload
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      *
      * @param {Phaser.Scene} scene - The current game scene.
      */
@@ -88,7 +88,7 @@ class Explosion extends GroupGameObject {
      * @public
      * @override
      * @method Explosion#spawn
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      *
      * @param {number} x - X coordinates of spawn position.
      * @param {number} y - Y coordinates of spawn position.
@@ -111,7 +111,7 @@ class Explosion extends GroupGameObject {
      * @public
      * @override
      * @method Explosion#update
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      */
     update () {
         // Do nothing
@@ -122,7 +122,7 @@ class Explosion extends GroupGameObject {
      *
      * @private
      * @method Explosion#setupAnimation
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      */
     setupAnimation () {
         this.scene.anims.create({

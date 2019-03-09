@@ -17,7 +17,7 @@ import GameObject from './GameObject.js';
  * @abstract
  * @class GroupGameObject
  * @extends GameObject
- * @since 0.1.0
+ * @since v1.0.0-alpha
  */
 class GroupGameObject extends GameObject {
 
@@ -25,7 +25,7 @@ class GroupGameObject extends GameObject {
      * Consturct group game object.
      *
      * @constructor
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      *
      * @throws {TypeError} Cannot construct object of this abstract type.
      *
@@ -50,7 +50,7 @@ class GroupGameObject extends GameObject {
      * @public
      * @override
      * @method GroupGameObject#destroy
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      */
     destroy () {
         this.group.remove(this.sprite, true, true);
@@ -62,7 +62,7 @@ class GroupGameObject extends GameObject {
      *
      * @protected
      * @method GroupGameObject#group
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      *
      * @return {Phaser.Physics.Arcade.Group} Phaser 3 physics group.
      */

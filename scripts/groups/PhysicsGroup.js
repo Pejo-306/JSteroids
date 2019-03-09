@@ -19,7 +19,7 @@ import 'phaser';
  *
  * @abstract
  * @class PhysicsGroup
- * @since 0.1.0
+ * @since v1.0.0-alpha
  */
 class PhysicsGroup {
 
@@ -27,7 +27,7 @@ class PhysicsGroup {
      * Construct physics group object.
      *
      * @constructor
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      *
      * @param {Game} game - Reference to the Phaser game instance.
      *
@@ -50,7 +50,7 @@ class PhysicsGroup {
      * @abstract
      * @static
      * @method PhysicsGroup.preload
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      *
      * @throws {Error} Must be implemented by subclass.
      *
@@ -66,7 +66,7 @@ class PhysicsGroup {
      * @public
      * @abstract
      * @method PhysicsGroup#spawn
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      *
      * @throws {Error} Must be implemented by subclass.
      *
@@ -84,7 +84,7 @@ class PhysicsGroup {
      *
      * @public
      * @method PhysicsGroup#update
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      */
     update () {
         for (let member of this.memberObjects.entries) {
@@ -97,7 +97,7 @@ class PhysicsGroup {
      *
      * @public
      * @method PhysicsGroup#addMember
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      *
      * @param {GameObject} gameObject - New addition to the group's member list.
      */
@@ -110,7 +110,7 @@ class PhysicsGroup {
      *
      * @public
      * @method PhysicsGroup#destroyMember
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      *
      * @param {GameObject} memberObject - Member object to be removed.
      */
@@ -123,7 +123,7 @@ class PhysicsGroup {
      *
      * @protected
      * @method PhysicsGroup#scene
-     * @since 0.1.0
+     * @since v1.0.0-alpha
      *
      * @return {Phaser.Scene} The currently loaded game scene.
      */
