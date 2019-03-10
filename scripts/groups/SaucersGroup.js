@@ -5,9 +5,10 @@ import Saucer from '../objects/Saucer.js';
 
 class SaucersGroup extends PhysicsGroup {
 
-    constructor (game) {
+    constructor (game, projectilesGroup) {
         super(game);
 
+        this.projectilesGroup = projectilesGroup;
         this.group = this.scene.physics.add.group({
             allowGravity: false,
             bounceX: 1,

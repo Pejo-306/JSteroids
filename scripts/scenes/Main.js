@@ -139,26 +139,56 @@ class Main extends Phaser.Scene {
      */
     create () {
         let asteroidsGroup = this.gameObjects['asteroids-group'] = new AsteroidsGroup(this.game);
-        let projectilesGroup = this.gameObjects['projectiles-group'] = new ProjectilesGroup(this.game);
         let explosionsGroup = this.gameObjects['explosions-group'] = new ExplosionsGroup(this.game);
-        let saucersGroup = this.gameObjects['saucers-group'] = new SaucersGroup(this.game);
-        let player = this.gameObjects['player'] = new Player(this.game, projectilesGroup);
+        let saucersProjectilesGroup = this.gameObjects['saucers-projectiles-group'] = new ProjectilesGroup(this.game);
+        let saucersGroup = this.gameObjects['saucers-group'] = new SaucersGroup(this.game, saucersProjectilesGroup);
+        let playerProjectilesGroup = this.gameObjects['player-projectiles-group'] = new ProjectilesGroup(this.game);
+        let player = this.gameObjects['player'] = new Player(this.game, playerProjectilesGroup);
         let playerSpawnX = this.physics.world.bounds.centerX;
         let playerSpawnY = this.physics.world.bounds.centerY;
         
         this.spawnPlayer(playerSpawnX, playerSpawnY, false);
         this.spawnAsteroids(5);
+
+        // Collision between the player's projectiles and asteroids
         this.physics.add.collider(
-            projectilesGroup.group, 
+            playerProjectilesGroup.group, 
             asteroidsGroup.group,
-            this.destroyAsteroid,
+            function (projectileSprite, asteroidSprite) { 
+                this.destroyAsteroid(
+                    projectileSprite, 
+                    asteroidSprite, 
+                    'player-projectiles-group'
+                );
+            },
             null,
             this
         );
+        // Collision between the player's projectiles and saucers
         this.physics.add.collider(
-            projectilesGroup.group, 
+            playerProjectilesGroup.group, 
             saucersGroup.group,
-            this.destroySaucer,
+            function (projectileSprite, saucerSprite) { 
+                this.destroySaucer(
+                    projectileSprite, 
+                    saucerSprite, 
+                    'player-projectiles-group'
+                );
+            },
+            null,
+            this
+        );
+        // Collision between saucers' projectiles and asteroids
+        this.physics.add.collider(
+            saucersProjectilesGroup.group,
+            asteroidsGroup.group,
+            function (projectileSprite, asteroidSprite) { 
+                this.destroyAsteroid(
+                    projectileSprite, 
+                    asteroidSprite, 
+                    'saucers-projectiles-group'
+                );
+            },
             null,
             this
         );
@@ -229,8 +259,8 @@ class Main extends Phaser.Scene {
      * @param {Phaser.GameObjects.Sprite} projectileSprite - The projectile's colliding sprite.
      * @param {Phaser.GameObjects.Sprite} asteroidSprite - The asteroid's colliding sprite.
      */
-    destroyAsteroid (projectileSprite, asteroidSprite) {
-        let projectile = this.gameObjects['projectiles-group'].memberObjects
+    destroyAsteroid (projectileSprite, asteroidSprite, projectilesGroupName) {
+        let projectile = this.gameObjects[projectilesGroupName].memberObjects
             .get('sprite', projectileSprite);
         let asteroid = this.gameObjects['asteroids-group'].memberObjects
             .get('sprite', asteroidSprite);
@@ -245,8 +275,8 @@ class Main extends Phaser.Scene {
         }
     }
 
-    destroySaucer (projectileSprite, saucerSprite) {
-        let projectile = this.gameObjects['projectiles-group'].memberObjects
+    destroySaucer (projectileSprite, saucerSprite, projectilesGroupName) {
+        let projectile = this.gameObjects[projectilesGroupName].memberObjects
             .get('sprite', projectileSprite);
         let saucer = this.gameObjects['saucers-group'].memberObjects
             .get('sprite', saucerSprite);
@@ -282,10 +312,12 @@ class Main extends Phaser.Scene {
         let player = this.gameObjects['player'];
         let asteroidsGroup = this.gameObjects['asteroids-group'];
         let saucersGroup = this.gameObjects['saucers-group'];
+        let saucersProjectilesGroup = this.gameObjects['saucers-projectiles-group'];
 
         player.spawn(x, y, invincibility);
         this.physics.add.overlap(player.sprite, asteroidsGroup.group, player.collideWithAsteroid, null, player);
         this.physics.add.overlap(player.sprite, saucersGroup.group, player.collideWithSaucer, null, player);
+        this.physics.add.overlap(player.sprite, saucersProjectilesGroup.group, player.collideWithProjectile, null, player);
     }
 
     /**
@@ -305,12 +337,16 @@ class Main extends Phaser.Scene {
      * @param {number} numOfAsteroids - Number of asteroids to spawn.
      */
     spawnAsteroids (numOfAsteroids) {
+        if (this.gameObjects['player'].sprite) {
+            var playerX = this.gameObjects['player'].sprite.body.center.x;
+            var playerY = this.gameObjects['player'].sprite.body.center.y;
+        } else { // player sprite has been destroyed
+            // Default player's spawn point to the world's center
+            var playerX = this.physics.world.bounds.center.x;
+            var playerY = this.physics.world.bounds.center.y;
+        }
         // Create keepout zone around player's game object
-        let playerKeepoutZone = new KeepoutZone(
-            this.gameObjects['player'].sprite.body.center.x,
-            this.gameObjects['player'].sprite.body.center.y,
-            this.constructor.KEEPOUT_ZONE_RADIUS
-        );
+        let playerKeepoutZone = new KeepoutZone(playerX, playerY, this.constructor.KEEPOUT_ZONE_RADIUS);
         // Radii for various levels of asteroids
         let keepoutZoneRadii = [
             this.constructor.KEEPOUT_ZONE_RADIUS,

@@ -228,7 +228,7 @@ class Player extends GameObject {
             // Fire a projectile
             if (this.scene.controls.cursors.space.isDown && this.canFire) {
                 this.fireProjectile();
-                // Prevent the player firing again until <1 / FIRE_RATE>
+                // Prevent the player from firing again until <1 / FIRE_RATE>
                 // seconds have passed
                 this.canFire = false;
                 this.scene.time.addEvent({
@@ -302,6 +302,17 @@ class Player extends GameObject {
             this.scene.gameObjects['explosions-group'].spawnExplosionBetweenObjects(this, saucer);
             this.death();
             saucer.destroy();
+        }
+    }
+
+    collideWithProjectile (playerSprite, saucerProjectileSprite) {
+        if (!this.invincible) {
+            let saucerProjectile = this.scene.gameObjects['saucers-projectiles-group'].memberObjects
+                .get('sprite', saucerProjectileSprite);
+
+            this.scene.gameObjects['explosions-group'].spawnExplosionBetweenObjects(this, saucerProjectile);
+            this.death();
+            saucerProjectile.destroy();
         }
     }
 

@@ -18,6 +18,8 @@ class Saucer extends GroupGameObject {
 
     static get MAX_BASE_ANGULAR_VELOCITY () { return 200; }
 
+    static get FIRE_RATE () { return 2; }
+
     static get WRAP_PADDING () { return 32; }
 
     constructor (game, physicsGroup, level) {
@@ -31,6 +33,7 @@ class Saucer extends GroupGameObject {
             throw new Error(`Saucers can be of levels ${minLevel}-${maxLevel}.`);
         }
         this.level = level;
+        this.canFire = true;
     }
 
     static preload (scene) {
@@ -63,7 +66,25 @@ class Saucer extends GroupGameObject {
     }
 
     update () {
+        // Fire a projectile
+        if (this.canFire) {
+            this.fireProjectile();
+            // Prevent the saucer from firing again until <1 / FIRE_RATE>
+            // seconds have passed
+            this.canFire = false;
+            this.scene.time.addEvent({
+                delay: 1000 / (this.constructor.FIRE_RATE * this.levelMultiplier),
+                callback: function () { this.canFire = true; },
+                callbackScope: this
+            });
+        }
+
+        // Keep saucers within the physics world bounds
         this.scene.physics.world.wrap(this.sprite, this.constructor.WRAP_PADDING);
+    }
+
+    fireProjectile () {
+        this.physicsGroup.projectilesGroup.spawn(this.sprite.x, this.sprite.y, this.sprite.angle);
     }
 
     get levelMultiplier () {
