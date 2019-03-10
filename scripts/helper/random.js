@@ -14,7 +14,7 @@
  * @param {number} max - Maximum value of interval (inclusive).
  * @param {boolean} signed - Can the generated integer be negative.
  *
- * @returns {number} The new randomly generated value.
+ * @return {number} The new randomly generated value.
  */
 export function generateRandomInteger(min, max, signed = true) {
     let sign = signed ? (Math.random() < 0.5 ? -1 : 1) : 1;
@@ -22,6 +22,16 @@ export function generateRandomInteger(min, max, signed = true) {
     return sign * (Math.floor(Math.random() * (max - min + 1)) + min); 
 }
 
+/**
+ * Pick a random element from an array.
+ *
+ * @function choose
+ * @since v1.0.0-alpha2
+ *
+ * @param {array} choices - List of elements to pick from.
+ *
+ * @return {object} The randomly chosen element.
+ */
 export function choose(choices) {
     let index = Math.floor(Math.random() * choices.length);
 
