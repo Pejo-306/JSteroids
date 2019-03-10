@@ -337,13 +337,15 @@ class Main extends Phaser.Scene {
      * @param {number} numOfAsteroids - Number of asteroids to spawn.
      */
     spawnAsteroids (numOfAsteroids) {
-        if (this.gameObjects['player'].sprite) {
-            var playerX = this.gameObjects['player'].sprite.body.center.x;
-            var playerY = this.gameObjects['player'].sprite.body.center.y;
+        let player = this.gameObjects['player'];
+
+        if (!player.dead) {
+            var playerX = player.sprite.body.center.x;
+            var playerY = player.sprite.body.center.y;
         } else { // player sprite has been destroyed
             // Default player's spawn point to the world's center
-            var playerX = this.physics.world.bounds.center.x;
-            var playerY = this.physics.world.bounds.center.y;
+            var playerX = this.physics.world.bounds.centerX;
+            var playerY = this.physics.world.bounds.centerY;
         }
         // Create keepout zone around player's game object
         let playerKeepoutZone = new KeepoutZone(playerX, playerY, this.constructor.KEEPOUT_ZONE_RADIUS);
