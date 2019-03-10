@@ -9,9 +9,12 @@ import 'phaser';
 import AsteroidsGroup from '../groups/AsteroidsGroup.js';
 import ProjectilesGroup from '../groups/ProjectilesGroup.js';
 import ExplosionsGroup from '../groups/ExplosionsGroup.js';
+import SaucersGroup from '../groups/SaucersGroup.js';
 import Player from '../objects/Player.js';
+import Saucer from '../objects/Saucer.js';
 
 import KeepoutZone from '../helper/KeepoutZone.js';
+import { generateRandomInteger, choose } from '../helper/random.js';
 
 /**
  * @classdesc
@@ -20,7 +23,7 @@ import KeepoutZone from '../helper/KeepoutZone.js';
  * This scene contains the game's gameplay. Asteroids are spawned in waves
  * in random locations apart from each other. The wave's asteroid count is
  * ever increasing. The scene never stops spawning asteroid waves.
- * The player has control over his/her game object - a spaceship which may
+ * The player has control over his/her game object - a saucer which may
  * shoot projectiles. The player may destroy asteroids by shooting at them
  * with their projectiles.
  *
@@ -82,6 +85,8 @@ class Main extends Phaser.Scene {
      */
     static get ASTEROID_SPAWN_DELAY () { return 1500; } // in ms
 
+    static get SAUCER_SPAWN_INTERVAL () { return 5000; }
+
     /**
      * Construct main game scene.
      *
@@ -109,6 +114,7 @@ class Main extends Phaser.Scene {
         AsteroidsGroup.preload(this);
         ProjectilesGroup.preload(this);
         ExplosionsGroup.preload(this);
+        SaucersGroup.preload(this);
         Player.preload(this);
     }
     
@@ -135,10 +141,13 @@ class Main extends Phaser.Scene {
         let asteroidsGroup = this.gameObjects['asteroids-group'] = new AsteroidsGroup(this.game);
         let projectilesGroup = this.gameObjects['projectiles-group'] = new ProjectilesGroup(this.game);
         let explosionsGroup = this.gameObjects['explosions-group'] = new ExplosionsGroup(this.game);
+        let saucersGroup = this.gameObjects['saucers-group'] = new SaucersGroup(this.game);
         let player = this.gameObjects['player'] = new Player(this.game, projectilesGroup);
         let playerSpawnX = this.physics.world.bounds.centerX;
         let playerSpawnY = this.physics.world.bounds.centerY;
         
+        // saucersGroup.spawn(100, 100, 1);
+        // saucersGroup.spawn(100, 300, 2);
         this.spawnPlayer(playerSpawnX, playerSpawnY, false);
         this.spawnAsteroids(5);
         this.addPlayerAsteroidsOverlap();
@@ -149,7 +158,7 @@ class Main extends Phaser.Scene {
             null,
             this
         );
-        this.events.on('spawnPlayer', this.spawnPlayer, this);
+        this.startSpawningSaucers();
         this.initializeControls();
     }
 
@@ -189,9 +198,8 @@ class Main extends Phaser.Scene {
             // Respawn player after delay
             this.time.addEvent({
                 delay: this.constructor.PLAYER_RESPAWN_DELAY,
-                callback: function () {
-                    this.events.emit('spawnPlayer', playerSpawnX, playerSpawnY);
-                },
+                callback: this.spawnPlayer,
+                args: [playerSpawnX, playerSpawnY],
                 callbackScope: this
             });
         } else {
@@ -298,6 +306,38 @@ class Main extends Phaser.Scene {
             args: [numOfAsteroids, keepoutZoneRadii, [playerKeepoutZone]],
             callbackScope: asteroidsGroup
         });
+    }
+
+    startSpawningSaucers () {
+        // Spawn a saucer sometime in the interval [0, SAUCER_SPAWN_INTERVAL]
+        this.time.addEvent({
+            delay: generateRandomInteger(0, this.constructor.SAUCER_SPAWN_INTERVAL, false),
+            callback: this.spawnSaucer,
+            callbackScope: this
+        });
+        // Repeat the spawning process after SAUCER_SPAWN_INTERVAL 
+        this.time.addEvent({
+            delay: this.constructor.SAUCER_SPAWN_INTERVAL,
+            callback: this.startSpawningSaucers,
+            callbackScope: this
+        });
+    }
+
+    spawnSaucer () {
+        // Randomly choose new saucer's level
+        let level = generateRandomInteger(Saucer.MIN_LEVEL, Saucer.MAX_LEVEL, false);
+        // Determine spawning location, which is outside 
+        // but nonetheless close to the world's border
+        let horizontalOffset = generateRandomInteger(20, 50, false);
+        let horizontalSide = choose([0, this.physics.world.bounds.width]);
+        let spawnX = horizontalSide + horizontalOffset;
+        spawnX = horizontalSide == 0 ? -spawnX : spawnX;
+        let verticalOffset = generateRandomInteger(20, 50, false);
+        let verticalSide = choose([0, this.physics.world.bounds.height]);
+        let spawnY = verticalSide + verticalOffset;
+        spawnY = verticalSide == 0 ? -spawnY : spawnY;
+
+        this.gameObjects['saucers-group'].spawn(spawnX, spawnY, level);
     }
 
     /**

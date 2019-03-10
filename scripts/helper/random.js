@@ -22,3 +22,9 @@ export function generateRandomInteger(min, max, signed = true) {
     return sign * (Math.floor(Math.random() * (max - min + 1)) + min); 
 }
 
+export function choose(choices) {
+    let index = Math.floor(Math.random() * choices.length);
+
+    return choices[index];
+}
+
