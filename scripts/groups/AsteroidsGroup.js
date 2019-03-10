@@ -34,7 +34,9 @@ class AsteroidsGroup extends PhysicsGroup {
         super(game);
 
         this.group = this.scene.physics.add.group({
-            allowGravity: false
+            allowGravity: false,
+            bounceX: 1,
+            bounceY: 1
         });
     }
 

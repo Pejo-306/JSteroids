@@ -294,6 +294,17 @@ class Player extends GameObject {
         }
     }
 
+    collideWithSaucer (playerSprite, saucerSprite) {
+        if (!this.invincible) {
+            let saucer = this.scene.gameObjects['saucers-group'].memberObjects
+                .get('sprite', saucerSprite);
+
+            this.scene.gameObjects['explosions-group'].spawnExplosionBetweenObjects(this, saucer);
+            this.death();
+            saucer.destroy();
+        }
+    }
+
     /**
      * Player death.
      *

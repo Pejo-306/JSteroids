@@ -10,9 +10,9 @@ class Saucer extends GroupGameObject {
 
     static get MAX_LEVEL () { return 2; }
 
-    static get MIN_BASE_VELOCITY () { return 75; }
+    static get MIN_BASE_VELOCITY () { return 100; }
 
-    static get MAX_BASE_VELOCITY () { return 100; }
+    static get MAX_BASE_VELOCITY () { return 125; }
 
     static get MIN_BASE_ANGULAR_VELOCITY () { return 150; }
 

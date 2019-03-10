@@ -85,7 +85,7 @@ class Main extends Phaser.Scene {
      */
     static get ASTEROID_SPAWN_DELAY () { return 1500; } // in ms
 
-    static get SAUCER_SPAWN_INTERVAL () { return 5000; }
+    static get SAUCER_SPAWN_INTERVAL () { return 2000; }
 
     /**
      * Construct main game scene.
@@ -146,11 +146,8 @@ class Main extends Phaser.Scene {
         let playerSpawnX = this.physics.world.bounds.centerX;
         let playerSpawnY = this.physics.world.bounds.centerY;
         
-        // saucersGroup.spawn(100, 100, 1);
-        // saucersGroup.spawn(100, 300, 2);
         this.spawnPlayer(playerSpawnX, playerSpawnY, false);
         this.spawnAsteroids(5);
-        this.addPlayerAsteroidsOverlap();
         this.physics.add.collider(
             projectilesGroup.group, 
             asteroidsGroup.group,
@@ -158,6 +155,14 @@ class Main extends Phaser.Scene {
             null,
             this
         );
+        this.physics.add.collider(
+            projectilesGroup.group, 
+            saucersGroup.group,
+            this.destroySaucer,
+            null,
+            this
+        );
+        this.physics.add.collider(asteroidsGroup.group, saucersGroup.group, null, null, this);
         this.startSpawningSaucers();
         this.initializeControls();
     }
@@ -240,6 +245,17 @@ class Main extends Phaser.Scene {
         }
     }
 
+    destroySaucer (projectileSprite, saucerSprite) {
+        let projectile = this.gameObjects['projectiles-group'].memberObjects
+            .get('sprite', projectileSprite);
+        let saucer = this.gameObjects['saucers-group'].memberObjects
+            .get('sprite', saucerSprite);
+
+        this.gameObjects['explosions-group'].spawnExplosionBetweenObjects(projectile, saucer);
+        projectile.destroy();
+        saucer.destroy();
+    }
+
     /**
      * Initialize Phaser input related objects.
      *
@@ -263,8 +279,13 @@ class Main extends Phaser.Scene {
      * @param {boolean} invincibility - Give the player temporary invincibility.
      */
     spawnPlayer (x, y, invincibility = true) {
-        this.gameObjects['player'].spawn(x, y, invincibility);
-        this.addPlayerAsteroidsOverlap();
+        let player = this.gameObjects['player'];
+        let asteroidsGroup = this.gameObjects['asteroids-group'];
+        let saucersGroup = this.gameObjects['saucers-group'];
+
+        player.spawn(x, y, invincibility);
+        this.physics.add.overlap(player.sprite, asteroidsGroup.group, player.collideWithAsteroid, null, player);
+        this.physics.add.overlap(player.sprite, saucersGroup.group, player.collideWithSaucer, null, player);
     }
 
     /**
@@ -338,20 +359,6 @@ class Main extends Phaser.Scene {
         spawnY = verticalSide == 0 ? -spawnY : spawnY;
 
         this.gameObjects['saucers-group'].spawn(spawnX, spawnY, level);
-    }
-
-    /**
-     * Add physics overlap between the player's sprite and all asteroids' sprites.
-     *
-     * @private
-     * @method Main#addPlayerAsteroidsOverlap
-     * @since v1.0.0-alpha
-     */
-    addPlayerAsteroidsOverlap () {
-        let player = this.gameObjects['player'];
-        let asteroidsGroup = this.gameObjects['asteroids-group'];
-
-        this.physics.add.overlap(player.sprite, asteroidsGroup.group, player.collideWithAsteroid, null, player);
     }
 
     /**
