@@ -133,6 +133,7 @@ class Player extends GameObject {
      * @since v1.0.0-alpha
      *
      * @param {Game} game - Reference to the Phaser game instance.
+     * @param {PhysicsGroup} projectilesGroup - Group whose projectiles are fired by the player.
      */
     constructor (game, projectilesGroup) {
         super(game);
@@ -198,7 +199,8 @@ class Player extends GameObject {
      * Player's behavioural code that is executed on each game loop iteration.
      *
      * The player may control his/her object via the cursor keys - accelerate 
-     * forwards, as well as rotate in both directions.
+     * forwards, as well as rotate in both directions. Furthermore, the player
+     * has the option to shoot out projectiles with the spacebar.
      *
      * @public
      * @override

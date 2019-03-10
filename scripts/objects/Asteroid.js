@@ -80,7 +80,7 @@ class Asteroid extends GroupGameObject {
     /**
      * Minimum base angular velocity of asteroids.
      *
-     * Value is used to set the constant rotation of asteroid sprite.
+     * Value is used to set the constant rotation of asteroid sprites.
      *
      * @public
      * @static
@@ -95,7 +95,7 @@ class Asteroid extends GroupGameObject {
     /**
      * Maximum base angular velocity of asteroids.
      *
-     * Value is used to set the constant rotation of asteroid sprite.
+     * Value is used to set the constant rotation of asteroid sprites.
      *
      * @public
      * @static
