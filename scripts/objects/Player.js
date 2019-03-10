@@ -258,9 +258,34 @@ class Player extends GameObject {
     }
 
     /**
-     * Fire a projectile forwards.
+     * Handle a collision between the player and another game object.
+     *
+     * If the player is not in state of temporary invincibility, the colliding
+     * object is destroyed while the player is killed. An explosion VFX is
+     * displayed.
      *
      * @public
+     * @callback Player~collideWithSprite
+     * @method Player#collideWithSprite
+     * @since v1.0.0-alpha2
+     *
+     * @param {Phaser.GameObjects.Sprite} otherSprite - The colliding object's sprite.
+     * @param {PhysicsGroup} otherGroup - The physics group which owns the other object.
+     */
+    collideWithSprite (otherSprite, otherGroup) {
+        if (!this.invincible) {
+            let other = otherGroup.memberObjects.get('sprite', otherSprite);
+
+            this.scene.gameObjects['explosions-group'].spawnExplosionBetweenObjects(this, other);
+            this.death();
+            other.destroy();
+        }
+    }
+
+    /**
+     * Fire a projectile forwards.
+     *
+     * @private
      * @method Player#fireProjectile
      * @since v1.0.0-alpha
      */
@@ -268,53 +293,6 @@ class Player extends GameObject {
         this.projectilesGroup.spawn(this.sprite.x, this.sprite.y, this.sprite.angle);
     }
 
-    /**
-     * Handle a collision between the player and an asteroid.
-     *
-     * If the player is not in state of temporary invincibility, the colliding
-     * asteroid is destroyed while the player is killed. An explosion VFX is
-     * displayed.
-     *
-     * @public
-     * @callback Player~collideWithAsteroid
-     * @method Player#collideWithAsteroid
-     * @since v1.0.0-alpha
-     *
-     * @param {Phaser.GameObjects.Sprite} playerSprite - The player's colliding sprite.
-     * @param {Phaser.GameObjects.Sprite} asteroidSprite - The asteroid's colliding sprite.
-     */
-    collideWithAsteroid (playerSprite, asteroidSprite) {
-        if (!this.invincible) {
-            let asteroid = this.scene.gameObjects['asteroids-group'].memberObjects
-                .get('sprite', asteroidSprite);
-
-            this.scene.gameObjects['explosions-group'].spawnExplosionBetweenObjects(this, asteroid);
-            this.death();
-            asteroid.destroy();
-        }
-    }
-
-    collideWithSaucer (playerSprite, saucerSprite) {
-        if (!this.invincible) {
-            let saucer = this.scene.gameObjects['saucers-group'].memberObjects
-                .get('sprite', saucerSprite);
-
-            this.scene.gameObjects['explosions-group'].spawnExplosionBetweenObjects(this, saucer);
-            this.death();
-            saucer.destroy();
-        }
-    }
-
-    collideWithProjectile (playerSprite, saucerProjectileSprite) {
-        if (!this.invincible) {
-            let saucerProjectile = this.scene.gameObjects['saucers-projectiles-group'].memberObjects
-                .get('sprite', saucerProjectileSprite);
-
-            this.scene.gameObjects['explosions-group'].spawnExplosionBetweenObjects(this, saucerProjectile);
-            this.death();
-            saucerProjectile.destroy();
-        }
-    }
 
     /**
      * Player death.

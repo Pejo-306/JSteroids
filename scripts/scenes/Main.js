@@ -315,9 +315,33 @@ class Main extends Phaser.Scene {
         let saucersProjectilesGroup = this.gameObjects['saucers-projectiles-group'];
 
         player.spawn(x, y, invincibility);
-        this.physics.add.overlap(player.sprite, asteroidsGroup.group, player.collideWithAsteroid, null, player);
-        this.physics.add.overlap(player.sprite, saucersGroup.group, player.collideWithSaucer, null, player);
-        this.physics.add.overlap(player.sprite, saucersProjectilesGroup.group, player.collideWithProjectile, null, player);
+        this.physics.add.overlap(
+            player.sprite, 
+            asteroidsGroup.group, 
+            function (playerSprite, asteroidSprite) {
+                player.collideWithSprite(asteroidSprite, this.gameObjects['asteroids-group']);
+            }, 
+            null, 
+            this
+        );
+        this.physics.add.overlap(
+            player.sprite, 
+            saucersGroup.group, 
+            function (playerSprite, saucerSprite) {
+                player.collideWithSprite(saucerSprite, this.gameObjects['saucers-group']);
+            }, 
+            null, 
+            this
+        );
+        this.physics.add.overlap(
+            player.sprite, 
+            saucersProjectilesGroup.group, 
+            function (playerSprite, saucerProjectileSprite) {
+                player.collideWithSprite(saucerProjectileSprite, this.gameObjects['saucers-projectiles-group']);
+            }, 
+            null, 
+            this
+        );
     }
 
     /**
