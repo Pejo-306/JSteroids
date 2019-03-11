@@ -9,10 +9,10 @@ import 'phaser';
 import GameObject from './GameObject.js';
 
 /**
- * Base class for all game objects who are members of a physics group.
+ * Base class for all game objects who are members of a game objects group.
  *
  * This class is an extension of the base GameObject class. The only difference
- * is that the former holds a reference to the a PhysicsGroup instance.
+ * is that the former holds a reference to the a GameObjectsGroup instance.
  *
  * @abstract
  * @class GroupGameObject
@@ -31,21 +31,21 @@ class GroupGameObject extends GameObject {
      *
      * @param {Game} game - Reference to the Phaser game instance.
      */
-    constructor (game, physicsGroup) {
+    constructor (game, gameObjectsGroup) {
         if (new.target === GroupGameObject) {
             throw new TypeError("Cannot construct object of abstract type 'GroupGameObject'");
         }
 
         super(game);
 
-        this.physicsGroup = physicsGroup;
+        this.gameObjectsGroup = gameObjectsGroup;
     }
 
     /**
      * Destroy this group game object.
      *
      * The method's default implementation destroys this game object and
-     * removes its reference from its associated PhysicsGroup.
+     * removes its reference from its associated GameObjectsGroup.
      *
      * @public
      * @override
@@ -54,11 +54,11 @@ class GroupGameObject extends GameObject {
      */
     destroy () {
         this.group.remove(this.sprite, true, true);
-        this.physicsGroup.destroyMember(this);
+        this.gameObjectsGroup.destroyMember(this);
     }
 
     /**
-     * Get reference to associated PhysicsGroup object's Phaser 3 group.
+     * Get reference to associated GameObjectsGroup object's Phaser 3 group.
      *
      * @protected
      * @method GroupGameObject#group
@@ -67,7 +67,7 @@ class GroupGameObject extends GameObject {
      * @return {Phaser.Physics.Arcade.Group} Phaser 3 physics group.
      */
     get group () {
-        return this.physicsGroup.group;
+        return this.gameObjectsGroup.group;
     }
 
 }

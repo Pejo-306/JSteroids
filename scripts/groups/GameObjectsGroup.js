@@ -18,13 +18,13 @@ import 'phaser';
  * provided interface.
  *
  * @abstract
- * @class PhysicsGroup
+ * @class GameObjectsGroup
  * @since v1.0.0-alpha
  */
-class PhysicsGroup {
+class GameObjectsGroup {
 
     /**
-     * Construct physics group object.
+     * Construct game objects group object.
      *
      * @constructor
      * @since v1.0.0-alpha
@@ -34,8 +34,8 @@ class PhysicsGroup {
      * @throws {TypeError} Cannot construct object of this abstract type.
      */
     constructor (game) {
-        if (new.target === PhysicsGroup) {
-            throw new TypeError("Cannot construct object of abstract type 'PhysicsGroup'");
+        if (new.target === GameObjectsGroup) {
+            throw new TypeError("Cannot construct object of abstract type 'GameObjectsGroup'");
         }
 
         this.game = game;
@@ -49,7 +49,7 @@ class PhysicsGroup {
      * @public
      * @abstract
      * @static
-     * @method PhysicsGroup.preload
+     * @method GameObjectsGroup.preload
      * @since v1.0.0-alpha
      *
      * @throws {Error} Must be implemented by subclass.
@@ -65,7 +65,7 @@ class PhysicsGroup {
      *
      * @public
      * @abstract
-     * @method PhysicsGroup#spawn
+     * @method GameObjectsGroup#spawn
      * @since v1.0.0-alpha
      *
      * @throws {Error} Must be implemented by subclass.
@@ -78,12 +78,12 @@ class PhysicsGroup {
     }
 
     /**
-     * PhysicsGroup's descendant behavioural code that is executed on each game loop iteration.
+     * GameObjectsGroup's descendant behavioural code that is executed on each game loop iteration.
      *
      * The method's default implementation calls each member's 'update()' method.
      *
      * @public
-     * @method PhysicsGroup#update
+     * @method GameObjectsGroup#update
      * @since v1.0.0-alpha
      */
     update () {
@@ -96,7 +96,7 @@ class PhysicsGroup {
      * Associate a new game object as a member of the group.
      *
      * @public
-     * @method PhysicsGroup#addMember
+     * @method GameObjectsGroup#addMember
      * @since v1.0.0-alpha
      *
      * @param {GameObject} gameObject - New addition to the group's member list.
@@ -109,7 +109,7 @@ class PhysicsGroup {
      * Destroy a specified member of the group.
      *
      * @public
-     * @method PhysicsGroup#destroyMember
+     * @method GameObjectsGroup#destroyMember
      * @since v1.0.0-alpha
      *
      * @param {GameObject} memberObject - Member object to be removed.
@@ -122,7 +122,7 @@ class PhysicsGroup {
      * Get the current game scene.
      *
      * @protected
-     * @method PhysicsGroup#scene
+     * @method GameObjectsGroup#scene
      * @since v1.0.0-alpha
      *
      * @return {Phaser.Scene} The currently loaded game scene.
@@ -130,7 +130,8 @@ class PhysicsGroup {
     get scene () {
         return this.game.currentScene;
     }
+
 }
 
-export default PhysicsGroup;
+export default GameObjectsGroup;
 

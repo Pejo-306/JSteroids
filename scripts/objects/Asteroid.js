@@ -130,13 +130,13 @@ class Asteroid extends GroupGameObject {
      * @since v1.0.0-alpha
      *
      * @param {Game} game - Reference to the Phaser game instance.
-     * @param {PhysicsGroup} physicsGroup - Reference to PhysicsGroup which owns this object.
+     * @param {GameObjectsGroup} gameObjectsGroup - Reference to GameObjectsGroup which owns this object.
      * @param {number} level - This asteroid's level.
      *
      * @throws {Error} Passed level must be within the permitted range.
      */
-    constructor (game, physicsGroup, level) {
-        super(game, physicsGroup);
+    constructor (game, gameObjectsGroup, level) {
+        super(game, gameObjectsGroup);
 
         let minLevel = this.constructor.MIN_LEVEL;
         let maxLevel = this.constructor.MAX_LEVEL;

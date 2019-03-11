@@ -144,13 +144,13 @@ class Saucer extends GroupGameObject {
      * @since v1.0.0-alpha2
      *
      * @param {Game} game - Reference to the Phaser game instance.
-     * @param {PhysicsGroup} physicsGroup - Reference to PhysicsGroup which owns this object.
+     * @param {GameObjectsGroup} gameObjectsGroup - Reference to GameObjectsGroup which owns this object.
      * @param {number} level - This saucer's level.
      *
      * @throws {Error} Passed level must be within the permitted range.
      */
-    constructor (game, physicsGroup, level) {
-        super(game, physicsGroup);
+    constructor (game, gameObjectsGroup, level) {
+        super(game, gameObjectsGroup);
 
         let minLevel = this.constructor.MIN_LEVEL;
         let maxLevel = this.constructor.MAX_LEVEL;
@@ -260,7 +260,7 @@ class Saucer extends GroupGameObject {
      * @since v1.0.0-alpha2
      */
     fireProjectile () {
-        this.physicsGroup.projectilesGroup.spawn(this.sprite.x, this.sprite.y, this.sprite.angle);
+        this.gameObjectsGroup.projectilesGroup.spawn(this.sprite.x, this.sprite.y, this.sprite.angle);
     }
 
     /**

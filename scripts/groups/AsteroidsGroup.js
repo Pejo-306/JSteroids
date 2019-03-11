@@ -6,7 +6,7 @@
 
 import 'phaser';
 
-import PhysicsGroup from './PhysicsGroup.js';
+import GameObjectsGroup from './GameObjectsGroup.js';
 import Asteroid from '../objects/Asteroid.js';
 
 import KeepoutZone from '../helper/KeepoutZone.js';
@@ -17,10 +17,10 @@ import { generateRandomInteger } from '../helper/random.js';
  * Asteroids group to hold all Asteroid game objects.
  *
  * @class AsteroidsGroup
- * @extends PhysicsGroup
+ * @extends GameObjectsGroup
  * @since v1.0.0-alpha
  */
-class AsteroidsGroup extends PhysicsGroup {
+class AsteroidsGroup extends GameObjectsGroup {
 
     /**
      * Construct asteroids group game object.
@@ -68,7 +68,7 @@ class AsteroidsGroup extends PhysicsGroup {
      * @param {number} level - Asteroid level of new game object.
      * @param {Phaser.Math.Vector2} velocity - Precalcuated velocity of asteroid.
      *
-     * @return {AsteroidsGroup} This physics group.
+     * @return {AsteroidsGroup} This game objects group.
      */
     spawn (x, y, level, velocity = null) {
         let asteroid = new Asteroid(this.game, this, level);
@@ -94,7 +94,7 @@ class AsteroidsGroup extends PhysicsGroup {
      * @param {array} radii - Keepout zones' radii for different asteroids levels.
      * @param {array} keepoutZones - Additional keepout zones.
      *
-     * @return {AsteroidsGroup} This physics group.
+     * @return {AsteroidsGroup} This game objects group.
      */
     spawnMultiple (numOfAsteroids, radii, keepoutZones = []) {
         for (let i = 0; i < numOfAsteroids; ++i) {

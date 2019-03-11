@@ -6,7 +6,7 @@
 
 import 'phaser';
 
-import PhysicsGroup from './PhysicsGroup.js';
+import GameObjectsGroup from './GameObjectsGroup.js';
 import Explosion from '../objects/Explosion.js';
 
 /**
@@ -14,10 +14,10 @@ import Explosion from '../objects/Explosion.js';
  * Explosions group to hold all Explosion game objects.
  *
  * @class ExplosionsGroup
- * @extends PhysicsGroup
+ * @extends GameObjectsGroup
  * @since v1.0.0-alpha
  */
-class ExplosionsGroup extends PhysicsGroup {
+class ExplosionsGroup extends GameObjectsGroup {
 
     /**
      * Construct explosions group game object.
@@ -61,7 +61,7 @@ class ExplosionsGroup extends PhysicsGroup {
      * @param {number} x - X coordinates of spawn position.
      * @param {number} y - Y coordinates of spawn position.
      *
-     * @return {ExplosionsGroup} This physics group.
+     * @return {ExplosionsGroup} This game objects group.
      */
     spawn (x, y) {
         let explosion = new Explosion(this.game, this);
@@ -81,7 +81,7 @@ class ExplosionsGroup extends PhysicsGroup {
      * @param {GameObject} gameObject1 - First game object.
      * @param {GameObject} gameObject2 - Second game object.
      *
-     * @return {ExplosionsGroup} This physics group.
+     * @return {ExplosionsGroup} This game objects group.
      */
     spawnExplosionBetweenObjects (gameObject1, gameObject2) {
         let explosionX = (gameObject1.sprite.x + gameObject2.sprite.x) / 2;

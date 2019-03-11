@@ -6,7 +6,7 @@
 
 import 'phaser';
 
-import PhysicsGroup from './PhysicsGroup.js';
+import GameObjectsGroup from './GameObjectsGroup.js';
 import Saucer from '../objects/Saucer.js';
 
 /**
@@ -14,10 +14,10 @@ import Saucer from '../objects/Saucer.js';
  * Saucers group to control all saucers.
  *
  * @class SaucersGroup
- * @extends PhysicsGroup
+ * @extends GameObjectsGroup
  * @since v1.0.0-alpha2
  */
-class SaucersGroup extends PhysicsGroup {
+class SaucersGroup extends GameObjectsGroup {
 
     /**
      * Construct saucers group game object.
@@ -26,7 +26,7 @@ class SaucersGroup extends PhysicsGroup {
      * @since v1.0.0-alpha2
      *
      * @param {Game} game - Reference to the Phaser game instance.
-     * @param {PhysicsGroup} projectilesGroup - Group whose projectiles are fired by saucers.
+     * @param {GameObjectsGroup} projectilesGroup - Group whose projectiles are fired by saucers.
      */
     constructor (game, projectilesGroup) {
         super(game);
@@ -66,7 +66,7 @@ class SaucersGroup extends PhysicsGroup {
      * @param {number} y - Y coordinates of spawn position.
      * @param {number} level - Saucer level of new game object.
      *
-     * @return {SaucersGroup} This physics group.
+     * @return {SaucersGroup} This game objects group.
      */
     spawn (x, y, level) {
         let saucer = new Saucer(this.game, this, level);

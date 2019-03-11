@@ -54,10 +54,10 @@ class Explosion extends GroupGameObject {
      * @since v1.0.0-alpha
      *
      * @param {Game} game - Reference to the Phaser game instance.
-     * @param {PhysicsGroup} physicsGroup - Reference to PhysicsGroup which owns this object.
+     * @param {GameObjectsGroup} gameObjectsGroup - Reference to GameObjectsGroup which owns this object.
      */
-    constructor (game, physicsGroup) {
-        super(game, physicsGroup);
+    constructor (game, gameObjectsGroup) {
+        super(game, gameObjectsGroup);
     }
 
     /**

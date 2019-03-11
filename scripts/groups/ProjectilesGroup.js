@@ -5,7 +5,7 @@
  */
 import 'phaser';
 
-import PhysicsGroup from './PhysicsGroup.js';
+import GameObjectsGroup from './GameObjectsGroup.js';
 import Projectile from '../objects/Projectile.js';
 
 /**
@@ -13,10 +13,10 @@ import Projectile from '../objects/Projectile.js';
  * Projectile group to hold all Projectile game objects.
  *
  * @class ProjectilesGroup
- * @extends PhysicsGroup
+ * @extends GameObjectsGroup
  * @since v1.0.0-alpha
  */
-class ProjectilesGroup extends PhysicsGroup {
+class ProjectilesGroup extends GameObjectsGroup {
 
     /**
      * Construct projectiles group game object.
@@ -61,7 +61,7 @@ class ProjectilesGroup extends PhysicsGroup {
      * @param {number} y - Y coordinates of spawn position.
      * @param {number} rotationAngle - Starting angle set to the new projectile.
      *
-     * @return {ProjectilesGroup} This physics group.
+     * @return {ProjectilesGroup} This game objects group.
      */
     spawn (x, y, rotationAngle) {
         let projectile = new Projectile(this.game, this);
