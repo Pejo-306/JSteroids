@@ -1,6 +1,6 @@
 {
   "name": "JSteroids",
-  "version": "v1.0.0-alpha",
+  "version": "v1.0.0-alpha2",
   "description": "Classical Asteroids game implemented in JavaScript",
   "main": "scripts/index.js",
   "scripts": {
