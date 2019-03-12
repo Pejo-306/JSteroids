@@ -20,6 +20,7 @@ import GroupGameObject from './GroupGameObject.js';
  * @class Projectile
  * @extends GropGameObject
  * @since v1.0.0-alpha
+ * @version v1.0.0-alpha2
  */
 class Projectile extends GroupGameObject {
 
@@ -31,6 +32,7 @@ class Projectile extends GroupGameObject {
      * @readonly
      * @method Projectile.LIFESPAN
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @return {number} Delay before automatic self-destruction.
      */
@@ -44,6 +46,7 @@ class Projectile extends GroupGameObject {
      * @readonly
      * @method Projectile.VELOCITY
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @return {number} Max velocity value.
      */
@@ -57,6 +60,7 @@ class Projectile extends GroupGameObject {
      * @readonly
      * @method Projectile.WRAP_PADDING
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @return {number} Wrap padding value.
      */
@@ -67,6 +71,7 @@ class Projectile extends GroupGameObject {
      *
      * @constructor
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @param {Game} game - Reference to the Phaser game instance.
      * @param {GameObjectsGroup} gameObjectsGroup - Reference to GameObjectsGroup which owns this object.
@@ -83,6 +88,7 @@ class Projectile extends GroupGameObject {
      * @override
      * @method Projectile.preload
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha2
      *
      * @param {Phaser.Scene} scene - The current game scene.
      */
@@ -101,6 +107,7 @@ class Projectile extends GroupGameObject {
      * @override
      * @method Projectile#spawn
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha2
      *
      * @param {number} x - X coordinates of spawn position.
      * @param {number} y - Y coordinates of spawn position.
@@ -135,6 +142,7 @@ class Projectile extends GroupGameObject {
      * @override
      * @method Projectile#update
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      */
     update () {
         this.scene.physics.world.wrap(this.sprite, this.constructor.WRAP_PADDING);

@@ -1,4 +1,4 @@
-/**
+/** 
  * @author       Petar Nikolov <penikolov23@gmail.com>
  * @copyright    2019 Petar Nikolov
  * @license      {@link https://github.com/Pejo-306/JSteroids/blob/master/LICENSE|MIT License}
@@ -15,6 +15,7 @@ import Projectile from '../objects/Projectile.js';
  * @class ProjectilesGroup
  * @extends GameObjectsGroup
  * @since v1.0.0-alpha
+ * @version v1.0.0-alpha2
  */
 class ProjectilesGroup extends GameObjectsGroup {
 
@@ -23,6 +24,7 @@ class ProjectilesGroup extends GameObjectsGroup {
      *
      * @constructor
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha2
      *
      * @param {Game} game - Reference to the Phaser game instance.
      * @param {string} projectileSprite - Name of projectile sprite.
@@ -44,6 +46,7 @@ class ProjectilesGroup extends GameObjectsGroup {
      * @override
      * @method ProjectilesGroup.preload
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @param {Phaser.Scene} scene - The current game scene.
      */
@@ -58,6 +61,7 @@ class ProjectilesGroup extends GameObjectsGroup {
      * @override
      * @method ProjectilesGroup#spawn
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha2
      *
      * @param {number} x - X coordinates of spawn position.
      * @param {number} y - Y coordinates of spawn position.

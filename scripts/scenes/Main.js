@@ -33,6 +33,7 @@ import { generateRandomInteger, choose } from '../helper/random.js';
  * @class Main
  * @extends Phaser.Scene
  * @since v1.0.0-alpha
+ * @version v1.0.0-alpha2
  */
 class Main extends Phaser.Scene {
 
@@ -44,6 +45,7 @@ class Main extends Phaser.Scene {
      * @readonly
      * @method Main.KEEPOUT_ZONE_RADIUS
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @return {number} Radius of base keepout zones.
      */
@@ -57,6 +59,7 @@ class Main extends Phaser.Scene {
      * @readonly
      * @method Main.PLAYER_LIVES
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @return {number} Amount of player's lives.
      */
@@ -70,10 +73,11 @@ class Main extends Phaser.Scene {
      * @readonly
      * @method Main.PLAYER_RESPAWN_DELAY
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @return {number} Delay before player respawn.
      */
-    static get PLAYER_RESPAWN_DELAY () { return 2000; }
+    static get PLAYER_RESPAWN_DELAY () { return 2000; } // in ms
 
     /**
      * Time to pass before respawning asteroids.
@@ -83,6 +87,7 @@ class Main extends Phaser.Scene {
      * @readonly
      * @method Main.PLAYER_RESPAWN_DELAY
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @return {number} Delay before asteroid wave spawn.
      */
@@ -96,16 +101,18 @@ class Main extends Phaser.Scene {
      * @readonly
      * @method Main.SAUCER_SPAWN_INTERVAL
      * @since v1.0.0-alpha2
+     * @version v1.0.0-alpha2
      * 
      * @return {number} Saucer spawning period.
      */
-    static get SAUCER_SPAWN_INTERVAL () { return 2000; }
+    static get SAUCER_SPAWN_INTERVAL () { return 10000; } // in ms
 
     /**
      * Construct main game scene.
      *
      * @constructor
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      */
     constructor () {
         super();
@@ -123,6 +130,7 @@ class Main extends Phaser.Scene {
      * @override
      * @method Main#preload
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha2
      */
     preload () {
         AsteroidsGroup.preload(this);
@@ -150,6 +158,7 @@ class Main extends Phaser.Scene {
      * @override
      * @method Main#create
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha2
      */
     create () {
         let asteroidsGroup = this.gameObjects['asteroids-group'] = new AsteroidsGroup(this.game);
@@ -161,9 +170,6 @@ class Main extends Phaser.Scene {
         let playerSpawnX = this.physics.world.bounds.centerX;
         let playerSpawnY = this.physics.world.bounds.centerY;
         
-        this.spawnPlayer(playerSpawnX, playerSpawnY, false);
-        this.spawnAsteroids(5);
-
         // Collision between the player's projectiles and asteroids
         this.physics.add.collider(
             playerProjectilesGroup.group, 
@@ -206,7 +212,11 @@ class Main extends Phaser.Scene {
             null,
             this
         );
+        // Collision between saucers' and asteroids
         this.physics.add.collider(asteroidsGroup.group, saucersGroup.group, null, null, this);
+
+        this.spawnPlayer(playerSpawnX, playerSpawnY, false);
+        this.spawnAsteroids(5);
         this.startSpawningSaucers();
         this.initializeControls();
     }
@@ -220,6 +230,7 @@ class Main extends Phaser.Scene {
      * @override
      * @method Main#update
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      */
     update () {
         for (let objectName in this.gameObjects) {
@@ -236,6 +247,7 @@ class Main extends Phaser.Scene {
      * @private
      * @method Main#killPlayer
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      */
     killPlayer () {
         if (this.playerLives > 0) {
@@ -257,55 +269,12 @@ class Main extends Phaser.Scene {
     }
 
     /**
-     * Handle a collision between a player projectile and an asteroid.
-     *
-     * Both the player's projectile and the asteroid are destroyed. An
-     * explosion VFX is displayed afterwards.
-     *
-     * If the whole asteroids wave has been destroyed, a new one is spawned.
-     * The newer wave comes with more asteroids than the previous one.
-     *
-     * @private
-     * @callback Main~destroyAsteroid
-     * @method Main#destroyAsteroid
-     * @since v1.0.0-alpha
-     *
-     * @param {Phaser.GameObjects.Sprite} projectileSprite - The projectile's colliding sprite.
-     * @param {Phaser.GameObjects.Sprite} asteroidSprite - The asteroid's colliding sprite.
-     */
-    destroyAsteroid (projectileSprite, asteroidSprite, projectilesGroupName) {
-        let projectile = this.gameObjects[projectilesGroupName].memberObjects
-            .get('sprite', projectileSprite);
-        let asteroid = this.gameObjects['asteroids-group'].memberObjects
-            .get('sprite', asteroidSprite);
-
-        this.gameObjects['explosions-group'].spawnExplosionBetweenObjects(projectile, asteroid);
-        projectile.destroy();
-        asteroid.destroy();
-
-        // Spawn a new asteroids wave
-        if (this.gameObjects['asteroids-group'].memberObjects.size == 0) {
-            this.spawnAsteroids(this.spawnedAsteroids * this.difficultyMultiplier);
-        }
-    }
-
-    destroySaucer (projectileSprite, saucerSprite, projectilesGroupName) {
-        let projectile = this.gameObjects[projectilesGroupName].memberObjects
-            .get('sprite', projectileSprite);
-        let saucer = this.gameObjects['saucers-group'].memberObjects
-            .get('sprite', saucerSprite);
-
-        this.gameObjects['explosions-group'].spawnExplosionBetweenObjects(projectile, saucer);
-        projectile.destroy();
-        saucer.destroy();
-    }
-
-    /**
      * Initialize Phaser input related objects.
      *
      * @private
      * @method Main#initializeControls
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha2
      */
     initializeControls () {
         this.controls.cursors = this.input.keyboard.createCursorKeys();
@@ -320,6 +289,7 @@ class Main extends Phaser.Scene {
      * @private
      * @method Main#spawnPlayer
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @param {number} x - X coordinates of player spawn point.
      * @param {number} y - Y coordinates of player spawn point.
@@ -380,6 +350,7 @@ class Main extends Phaser.Scene {
      * @private
      * @method Main#spawnAsteroids
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha2
      *
      * @param {number} numOfAsteroids - Number of asteroids to spawn.
      */
@@ -425,6 +396,7 @@ class Main extends Phaser.Scene {
      * @callback Main~startSpawningSaucers
      * @method Main#startSpawningSaucers
      * @since v1.0.0-alpha2
+     * @version v1.0.0-alpha2
      */
     startSpawningSaucers () {
         // Spawn a saucer sometime in the interval [0, SAUCER_SPAWN_INTERVAL]
@@ -451,6 +423,7 @@ class Main extends Phaser.Scene {
      * @callback Main~spawnSaucer
      * @method Main#spawnSaucer
      * @since v1.0.0-alpha2
+     * @version v1.0.0-alpha2
      */
     spawnSaucer () {
         // Randomly choose new saucer's level
@@ -470,11 +443,74 @@ class Main extends Phaser.Scene {
     }
 
     /**
+     * Handle a collision between a player projectile and an asteroid.
+     *
+     * Both the player's projectile and the asteroid are destroyed. An
+     * explosion VFX is displayed afterwards.
+     *
+     * If the whole asteroids wave has been destroyed, a new one is spawned.
+     * The newer wave comes with more asteroids than the previous one.
+     *
+     * @private
+     * @callback Main~destroyAsteroid
+     * @method Main#destroyAsteroid
+     * @since v1.0.0-alpha
+     * @version v1.0.0-alpha2
+     *
+     * @param {Phaser.GameObjects.Sprite} projectileSprite - The projectile's colliding sprite.
+     * @param {Phaser.GameObjects.Sprite} asteroidSprite - The asteroid's colliding sprite.
+     * @param {string} projectilesGroupName - Name of colliding projectile's game objects group.
+     */
+    destroyAsteroid (projectileSprite, asteroidSprite, projectilesGroupName) {
+        let projectile = this.gameObjects[projectilesGroupName].memberObjects
+            .get('sprite', projectileSprite);
+        let asteroid = this.gameObjects['asteroids-group'].memberObjects
+            .get('sprite', asteroidSprite);
+
+        this.gameObjects['explosions-group'].spawnExplosionBetweenObjects(projectile, asteroid);
+        projectile.destroy();
+        asteroid.destroy();
+
+        // Spawn a new asteroids wave
+        if (this.gameObjects['asteroids-group'].memberObjects.size == 0) {
+            this.spawnAsteroids(this.spawnedAsteroids * this.difficultyMultiplier);
+        }
+    }
+
+    /**
+     * Handle a collision between a player's projectile and a saucer.
+     *
+     * Both the player's projectile and the saucer are destroyed. An
+     * explosion VFX is displayed afterwards.
+     *
+     * @private
+     * @callback Main~destroySaucer
+     * @method Main#destroySaucer
+     * @since v1.0.0-alpha2
+     * @version v1.0.0-alpha2
+     *
+     * @param {Phaser.GameObjects.Sprite} projectileSprite - The projectile's colliding sprite.
+     * @param {Phaser.GameObjects.Sprite} saucer - The saucer's colliding sprite.
+     * @param {string} projectilesGroupName - Name of colliding projectile's game objects group.
+     */
+    destroySaucer (projectileSprite, saucerSprite, projectilesGroupName) {
+        let projectile = this.gameObjects[projectilesGroupName].memberObjects
+            .get('sprite', projectileSprite);
+        let saucer = this.gameObjects['saucers-group'].memberObjects
+            .get('sprite', saucerSprite);
+
+        this.gameObjects['explosions-group'].spawnExplosionBetweenObjects(projectile, saucer);
+        projectile.destroy();
+        saucer.destroy();
+    }
+
+    /**
      * Get difficutly multiplier.
      *
      * @private
      * @method Main#difficultyMultiplier
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @return {number} Difficulty multiplier.
      */

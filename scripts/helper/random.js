@@ -9,6 +9,7 @@
  *
  * @function generateRandomInteger
  * @since v1.0.0-alpha
+ * @version v1.0.0-alpha
  *
  * @param {number} min - Minimum value of interval (inclusive).
  * @param {number} max - Maximum value of interval (inclusive).
@@ -27,6 +28,7 @@ export function generateRandomInteger(min, max, signed = true) {
  *
  * @function choose
  * @since v1.0.0-alpha2
+ * @version v1.0.0-alpha2
  *
  * @param {array} choices - List of elements to pick from.
  *

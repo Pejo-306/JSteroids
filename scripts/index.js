@@ -15,6 +15,7 @@ import Game from './Game.js';
  *
  * @var {object} config
  * @since v1.0.0-alpha
+ * @version v1.0.0-alpha
  */
 let config = {
     type: Phaser.AUTO,
@@ -35,6 +36,7 @@ let config = {
  * @global
  * @var {Game} game
  * @since v1.0.0-alpha
+ * @version v1.0.0-alpha
  */
 export var game = new Game(config);
 

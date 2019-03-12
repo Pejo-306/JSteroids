@@ -19,6 +19,7 @@ import { generateRandomInteger } from '../helper/random.js';
  * @class AsteroidsGroup
  * @extends GameObjectsGroup
  * @since v1.0.0-alpha
+ * @version v1.0.0-alpha2
  */
 class AsteroidsGroup extends GameObjectsGroup {
 
@@ -27,6 +28,7 @@ class AsteroidsGroup extends GameObjectsGroup {
      *
      * @constructor
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha2
      *
      * @param {Game} game - Reference to the Phaser game instance.
      */
@@ -48,6 +50,7 @@ class AsteroidsGroup extends GameObjectsGroup {
      * @override
      * @method AsteroidsGroup.preload
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @param {Phaser.Scene} scene - The current game scene.
      */
@@ -62,6 +65,7 @@ class AsteroidsGroup extends GameObjectsGroup {
      * @override
      * @method AsteroidsGroup#spawn
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @param {number} x - X coordinates of spawn position.
      * @param {number} y - Y coordinates of spawn position.
@@ -89,6 +93,7 @@ class AsteroidsGroup extends GameObjectsGroup {
      * @public
      * @method AsteroidsGroup#spawnMultiple
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @param {number} numOfAsteroids - Number of asteroids to spawn.
      * @param {array} radii - Keepout zones' radii for different asteroids levels.
@@ -126,8 +131,11 @@ class AsteroidsGroup extends GameObjectsGroup {
      * @override
      * @method AsteroidsGroup#destroyMember
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha2
      *
      * @param {Asteroid} memberObject - The member asteroid which is to be removed from this group.
+     *
+     * @return {AsteroidsGroup} This game objects group.
      */
     destroyMember (memberObject) {
         let newAsteroidsLevel = memberObject.level + 1;
@@ -142,7 +150,7 @@ class AsteroidsGroup extends GameObjectsGroup {
             this.spawn(memberObject.sprite.x, memberObject.sprite.y, newAsteroidsLevel, velocity);
             this.spawn(memberObject.sprite.x, memberObject.sprite.y, newAsteroidsLevel, oppositeVelocity);
         }
-        super.destroyMember(memberObject);
+        return super.destroyMember(memberObject);
     }
 
 }

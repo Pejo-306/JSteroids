@@ -16,6 +16,7 @@ import Explosion from '../objects/Explosion.js';
  * @class ExplosionsGroup
  * @extends GameObjectsGroup
  * @since v1.0.0-alpha
+ * @version v1.0.0-alpha
  */
 class ExplosionsGroup extends GameObjectsGroup {
 
@@ -24,6 +25,7 @@ class ExplosionsGroup extends GameObjectsGroup {
      *
      * @constructor
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @param {Game} game - Reference to the Phaser game instance.
      */
@@ -43,6 +45,7 @@ class ExplosionsGroup extends GameObjectsGroup {
      * @override
      * @method ExplosionsGroup.preload
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @param {Phaser.Scene} scene - The current game scene.
      */
@@ -57,6 +60,7 @@ class ExplosionsGroup extends GameObjectsGroup {
      * @override
      * @method ExplosionsGroup#spawn
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @param {number} x - X coordinates of spawn position.
      * @param {number} y - Y coordinates of spawn position.
@@ -77,6 +81,7 @@ class ExplosionsGroup extends GameObjectsGroup {
      * @public
      * @method ExplosionsGroup#spawnExplosionsBetweenObjects
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @param {GameObject} gameObject1 - First game object.
      * @param {GameObject} gameObject2 - Second game object.

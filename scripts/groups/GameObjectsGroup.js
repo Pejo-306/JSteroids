@@ -20,6 +20,7 @@ import 'phaser';
  * @abstract
  * @class GameObjectsGroup
  * @since v1.0.0-alpha
+ * @version v1.0.0-alpha2
  */
 class GameObjectsGroup {
 
@@ -28,6 +29,7 @@ class GameObjectsGroup {
      *
      * @constructor
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha2
      *
      * @param {Game} game - Reference to the Phaser game instance.
      *
@@ -51,6 +53,7 @@ class GameObjectsGroup {
      * @static
      * @method GameObjectsGroup.preload
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @throws {Error} Must be implemented by subclass.
      *
@@ -67,6 +70,7 @@ class GameObjectsGroup {
      * @abstract
      * @method GameObjectsGroup#spawn
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @throws {Error} Must be implemented by subclass.
      *
@@ -85,6 +89,7 @@ class GameObjectsGroup {
      * @public
      * @method GameObjectsGroup#update
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      */
     update () {
         for (let member of this.memberObjects.entries) {
@@ -98,11 +103,15 @@ class GameObjectsGroup {
      * @public
      * @method GameObjectsGroup#addMember
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha2
      *
      * @param {GameObject} gameObject - New addition to the group's member list.
+     *
+     * @return {GameObjectsGroup} This game objects group.
      */
     addMember (gameObject) {
         this.memberObjects.set(gameObject);
+        return this;
     }
 
     /**
@@ -111,11 +120,15 @@ class GameObjectsGroup {
      * @public
      * @method GameObjectsGroup#destroyMember
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha2
      *
      * @param {GameObject} memberObject - Member object to be removed.
+     *
+     * @return {GameObjectsGroup} This game objects group.
      */
     destroyMember (memberObject) {
         this.memberObjects.delete(memberObject); 
+        return this;
     }
 
     /**
@@ -124,6 +137,7 @@ class GameObjectsGroup {
      * @protected
      * @method GameObjectsGroup#scene
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @return {Phaser.Scene} The currently loaded game scene.
      */

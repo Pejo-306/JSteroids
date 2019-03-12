@@ -22,6 +22,7 @@ import { generateRandomInteger } from '../helper/random.js';
  * @class Asteroid
  * @extends GroupGameObject
  * @since v1.0.0-alpha
+ * @version v1.0.0-alpha
  */
 class Asteroid extends GroupGameObject {
 
@@ -33,6 +34,7 @@ class Asteroid extends GroupGameObject {
      * @readonly
      * @method Asteroid.MIN_LEVEL
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @return {number} Min level of asteroids.
      */
@@ -46,6 +48,7 @@ class Asteroid extends GroupGameObject {
      * @readonly
      * @method Asteroid.MAX_LEVEL
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @return {number} Max level of asteroids.
      */
@@ -59,6 +62,7 @@ class Asteroid extends GroupGameObject {
      * @readonly
      * @method Asteroid.MIN_BASE_VELOCITY
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @return {number} Min value of base velocity.
      */
@@ -72,6 +76,7 @@ class Asteroid extends GroupGameObject {
      * @readonly
      * @method Asteroid.MAX_BASE_VELOCITY
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @return {number} Max value of base velocity.
      */
@@ -87,6 +92,7 @@ class Asteroid extends GroupGameObject {
      * @readonly
      * @method Asteroid.MIN_BASE_ANGULAR_VELOCITY
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @return {number} Min value of base angular velocity.
      */
@@ -102,6 +108,7 @@ class Asteroid extends GroupGameObject {
      * @readonly
      * @method Asteroid.MAX_BASE_ANGULAR_VELOCITY
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @return {number} Max value of base angular velocity.
      */
@@ -115,6 +122,7 @@ class Asteroid extends GroupGameObject {
      * @readonly
      * @method Asteroid.WRAP_PADDING
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @return {number} Wrap padding value.
      */
@@ -128,6 +136,7 @@ class Asteroid extends GroupGameObject {
      *
      * @constructor
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @param {Game} game - Reference to the Phaser game instance.
      * @param {GameObjectsGroup} gameObjectsGroup - Reference to GameObjectsGroup which owns this object.
@@ -156,6 +165,7 @@ class Asteroid extends GroupGameObject {
      * @override
      * @method Asteroid.preload
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @param {Phaser.Scene} scene - The current game scene.
      */
@@ -175,6 +185,7 @@ class Asteroid extends GroupGameObject {
      * @static
      * @method Asteroid.generateVelocityValue
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @param {number} multiplier - Level multiplier of asteroid.
      *
@@ -201,6 +212,7 @@ class Asteroid extends GroupGameObject {
      * @override
      * @method Asteroid#spawn
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @param {number} x - X coordinates of spawn position.
      * @param {number} y - Y coordinates of spawn position.
@@ -235,6 +247,7 @@ class Asteroid extends GroupGameObject {
      * @override
      * @method Asteroid#update
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      */
     update () {
         this.scene.physics.world.wrap(this.sprite, this.constructor.WRAP_PADDING);
@@ -251,6 +264,7 @@ class Asteroid extends GroupGameObject {
      * @private
      * @method Asteroid#generateVelocityValue
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @return {number} The newly generated velocity value.
      */
@@ -265,6 +279,7 @@ class Asteroid extends GroupGameObject {
      * @readonly
      * @method Asteroid#levelMultiplier
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @return {number} The asteroid's level multiplier.
      */

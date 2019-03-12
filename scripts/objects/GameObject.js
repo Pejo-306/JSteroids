@@ -21,6 +21,7 @@ import 'phaser';
  * @abstract
  * @class GameObject
  * @since v1.0.0-alpha
+ * @version v1.0.0-alpha
  */
 class GameObject {
 
@@ -29,6 +30,7 @@ class GameObject {
      *
      * @constructor
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @throws {TypeError} Cannot construct object of this abstract type.
      *
@@ -51,6 +53,7 @@ class GameObject {
      * @static
      * @method GameObject.preload
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @throws {Error} Must be implemented by subclass.
      *
@@ -67,6 +70,7 @@ class GameObject {
      * @abstract
      * @method GameObject#spawn
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @throws {Error} Must be implemented by subclass.
      *
@@ -83,12 +87,13 @@ class GameObject {
      * This is where game object controls, as well as dynamic manipulation in
      * general should go.
      *
-     * @throws {Error} Must be implemented by subclass.
-     *
      * @public
      * @abstract
      * @method GameObject#update
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
+     *
+     * @throws {Error} Must be implemented by subclass.
      */
     update () {
         throw new Error(`${this.constructor.name}: must implement abstract method update()`);
@@ -97,12 +102,13 @@ class GameObject {
     /**
      * Destroy this game object and all of its associated assets.
      *
-     * @throws {Error} Must be implemented by subclass.
-     *
      * @public
      * @abstract
      * @method GameObject#destroy
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
+     *
+     * @throws {Error} Must be implemented by subclass.
      */
     destroy () {
         throw new Error(`${this.constructor.name}: must implement abstract method destroy()`);
@@ -114,6 +120,7 @@ class GameObject {
      * @protected
      * @method GameObject#scene
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @return {Phaser.Scene} The currently loaded game scene.
      */

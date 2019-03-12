@@ -15,6 +15,7 @@ import 'phaser';
  * @class Boot
  * @extends Phaser.Scene
  * @since v1.0.0-alpha
+ * @version v1.0.0-alpha
  */
 class Boot extends Phaser.Scene {
 
@@ -28,6 +29,7 @@ class Boot extends Phaser.Scene {
      * @override
      * @method Boot#create
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      */
     create () {
         this.game.switchScene(this.game.postSetupScene);

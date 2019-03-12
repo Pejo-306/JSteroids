@@ -23,6 +23,7 @@ import { generateRandomInteger } from '../helper/random.js';
  * @class Saucer
  * @extends GroupGameObject
  * @since v1.0.0-alpha2
+ * @version v1.0.0-alpha2
  */
 class Saucer extends GroupGameObject {
 
@@ -34,6 +35,7 @@ class Saucer extends GroupGameObject {
      * @readonly
      * @method Saucer.MIN_LEVEL
      * @since v1.0.0-alpha2
+     * @version v1.0.0-alpha2
      *
      * @return {number} Min level of saucers.
      */
@@ -47,6 +49,7 @@ class Saucer extends GroupGameObject {
      * @readonly
      * @method Saucer.MAX_LEVEL
      * @since v1.0.0-alpha2
+     * @version v1.0.0-alpha2
      *
      * @return {number} Max level of saucers.
      */
@@ -60,6 +63,7 @@ class Saucer extends GroupGameObject {
      * @readonly
      * @method Saucer.MIN_BASE_VELOCITY
      * @since v1.0.0-alpha2
+     * @version v1.0.0-alpha2
      *
      * @return {number} Min value of base velocity.
      */
@@ -73,6 +77,7 @@ class Saucer extends GroupGameObject {
      * @readonly
      * @method Saucer.MAX_BASE_VELOCITY
      * @since v1.0.0-alpha2
+     * @version v1.0.0-alpha2
      *
      * @return {number} Max value of base velocity.
      */
@@ -88,6 +93,7 @@ class Saucer extends GroupGameObject {
      * @readonly
      * @method Saucer.MIN_BASE_ANGULAR_VELOCITY
      * @since v1.0.0-alpha2
+     * @version v1.0.0-alpha2
      *
      * @return {number} Min value of base angular velocity.
      */
@@ -103,6 +109,7 @@ class Saucer extends GroupGameObject {
      * @readonly
      * @method Saucer.MAX_BASE_ANGULAR_VELOCITY
      * @since v1.0.0-alpha2
+     * @version v1.0.0-alpha2
      *
      * @return {number} Max value of base angular velocity.
      */
@@ -116,6 +123,7 @@ class Saucer extends GroupGameObject {
      * @readonly
      * @method Saucer.FIRE_RATE
      * @since v1.0.0-alpha2
+     * @version v1.0.0-alpha2
      *
      * @return {number} Fire rate.
      */
@@ -129,6 +137,7 @@ class Saucer extends GroupGameObject {
      * @readonly
      * @method Saucer.WRAP_PADDING
      * @since v1.0.0-alpha2
+     * @version v1.0.0-alpha2
      *
      * @return {number} Wrap padding value.
      */
@@ -142,6 +151,7 @@ class Saucer extends GroupGameObject {
      *
      * @constructor
      * @since v1.0.0-alpha2
+     * @version v1.0.0-alpha2
      *
      * @param {Game} game - Reference to the Phaser game instance.
      * @param {GameObjectsGroup} gameObjectsGroup - Reference to GameObjectsGroup which owns this object.
@@ -171,6 +181,7 @@ class Saucer extends GroupGameObject {
      * @override
      * @method Saucer.preload
      * @since v1.0.0-alpha2
+     * @version v1.0.0-alpha2
      *
      * @param {Phaser.Scene} scene - The current game scene.
      */
@@ -193,6 +204,7 @@ class Saucer extends GroupGameObject {
      * @override
      * @method Saucer#spawn
      * @since v1.0.0-alpha2
+     * @version v1.0.0-alpha2
      *
      * @param {number} x - X coordinates of spawn position.
      * @param {number} y - Y coordinates of spawn position.
@@ -233,6 +245,7 @@ class Saucer extends GroupGameObject {
      * @override
      * @method Saucer#update
      * @since v1.0.0-alpha2
+     * @version v1.0.0-alpha2
      */
     update () {
         // Fire a projectile
@@ -258,6 +271,7 @@ class Saucer extends GroupGameObject {
      * @private
      * @method Saucer#fireProjectile
      * @since v1.0.0-alpha2
+     * @version v1.0.0-alpha2
      */
     fireProjectile () {
         this.gameObjectsGroup.projectilesGroup.spawn(this.sprite.x, this.sprite.y, this.sprite.angle);
@@ -270,6 +284,7 @@ class Saucer extends GroupGameObject {
      * @readonly
      * @method Saucer#levelMultiplier
      * @since v1.0.0-alpha2
+     * @version v1.0.0-alpha2
      *
      * @return {number} The saucer's level multiplier.
      */

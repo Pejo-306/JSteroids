@@ -17,6 +17,7 @@ import 'phaser';
  *
  * @class KeepoutZone
  * @since v1.0.0-alpha
+ * @version v1.0.0-alpha
  */
 class KeepoutZone {
     
@@ -25,6 +26,7 @@ class KeepoutZone {
      *
      * @constructor
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @param {number} x - X coordinates of zone origin.
      * @param {number} y - Y coordinates of zone origin.
@@ -40,6 +42,7 @@ class KeepoutZone {
      * @public
      * @method KeepoutZone#contains
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @param {number} x - X coordinates of checked point.
      * @param {number} y - Y coordinates of checked point.

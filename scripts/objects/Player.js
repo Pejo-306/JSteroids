@@ -19,6 +19,7 @@ import GameObject from './GameObject.js';
  * @class Player
  * @extends GameObject
  * @since v1.0.0-alpha
+ * @version v1.0.0-alpha2
  */
 class Player extends GameObject {
 
@@ -30,6 +31,7 @@ class Player extends GameObject {
      * @readonly
      * @method Player.STARTING_ANGLE
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @return {number} The starting angle.
      */
@@ -43,6 +45,7 @@ class Player extends GameObject {
      * @readonly
      * @method Player.DRAG
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @return {number} Drag value.
      */
@@ -56,6 +59,7 @@ class Player extends GameObject {
      * @readonly
      * @method Player.MAX_VELOCITY
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @return {number} Max velocity value.
      */
@@ -69,6 +73,7 @@ class Player extends GameObject {
      * @readonly
      * @method Player.ANGULAR_VELOCITY
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @return {number} Angular velocity value.
      */
@@ -82,6 +87,7 @@ class Player extends GameObject {
      * @readonly
      * @method Player.FIRE_RATE
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @return {number} Fire rate.
      */
@@ -95,6 +101,7 @@ class Player extends GameObject {
      * @readonly
      * @method Player.INVINCIBILITY_TIME
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @return {number} Invincibility time.
      */
@@ -108,6 +115,7 @@ class Player extends GameObject {
      * @readonly
      * @method Player.FLASH_TIME
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @return {number} Time in which the player's sprite is invisible.
      */
@@ -121,6 +129,7 @@ class Player extends GameObject {
      * @readonly
      * @method Player.WRAP_PADDING
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @return {number} Wrap padding value.
      */
@@ -131,6 +140,7 @@ class Player extends GameObject {
      *
      * @constructor
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @param {Game} game - Reference to the Phaser game instance.
      * @param {PhysicsGroup} projectilesGroup - Group whose projectiles are fired by the player.
@@ -152,6 +162,7 @@ class Player extends GameObject {
      * @override
      * @method Player.preload
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @param {Phaser.Scene} scene - The current game scene.
      */
@@ -169,6 +180,7 @@ class Player extends GameObject {
      * @override
      * @method Player#spawn
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      *
      * @param {number} x - X coordinates of spawn position.
      * @param {number} y - Y coordinates of spawn position.
@@ -206,6 +218,7 @@ class Player extends GameObject {
      * @override
      * @method Player#update
      * @since v1.0.0-alpha
+     * @since v1.0.0-alpha2
      */
     update () {
         if (!this.dead) {
@@ -254,6 +267,7 @@ class Player extends GameObject {
      * @override
      * @method Player#destroy
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      */
     destroy () {
         // Do nothing
@@ -270,6 +284,7 @@ class Player extends GameObject {
      * @callback Player~collideWithSprite
      * @method Player#collideWithSprite
      * @since v1.0.0-alpha2
+     * @version v1.0.0-alpha2
      *
      * @param {Phaser.GameObjects.Sprite} otherSprite - The colliding object's sprite.
      * @param {PhysicsGroup} otherGroup - The physics group which owns the other object.
@@ -290,6 +305,7 @@ class Player extends GameObject {
      * @private
      * @method Player#fireProjectile
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      */
     fireProjectile () {
         this.projectilesGroup.spawn(this.sprite.x, this.sprite.y, this.sprite.angle);
@@ -304,6 +320,7 @@ class Player extends GameObject {
      * @private
      * @method Player#death
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      */
     death () {
         this.dead = true;
@@ -319,6 +336,7 @@ class Player extends GameObject {
      * @private
      * @method Player#flashSprite
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      */
     flashSprite () {
         if (this.invincible) {
@@ -339,6 +357,7 @@ class Player extends GameObject {
      * @private
      * @method Player#showSprite
      * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
      */
     showSprite () {
         this.sprite.setVisible(true);

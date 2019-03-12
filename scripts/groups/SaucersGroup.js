@@ -16,6 +16,7 @@ import Saucer from '../objects/Saucer.js';
  * @class SaucersGroup
  * @extends GameObjectsGroup
  * @since v1.0.0-alpha2
+ * @version v1.0.0-alpha2
  */
 class SaucersGroup extends GameObjectsGroup {
 
@@ -24,6 +25,7 @@ class SaucersGroup extends GameObjectsGroup {
      *
      * @constructor
      * @since v1.0.0-alpha2
+     * @version v1.0.0-alpha2
      *
      * @param {Game} game - Reference to the Phaser game instance.
      * @param {GameObjectsGroup} projectilesGroup - Group whose projectiles are fired by saucers.
@@ -47,6 +49,7 @@ class SaucersGroup extends GameObjectsGroup {
      * @override
      * @method SaucersGroup.preload
      * @since v1.0.0-alpha2
+     * @version v1.0.0-alpha2
      *
      * @param {Phaser.Scene} scene - The current game scene.
      */
@@ -61,6 +64,7 @@ class SaucersGroup extends GameObjectsGroup {
      * @override
      * @method SaucersGroup#spawn
      * @since v1.0.0-alpha2
+     * @version v1.0.0-alpha2
      *
      * @param {number} x - X coordinates of spawn position.
      * @param {number} y - Y coordinates of spawn position.
