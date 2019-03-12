@@ -25,13 +25,15 @@ class ProjectilesGroup extends GameObjectsGroup {
      * @since v1.0.0-alpha
      *
      * @param {Game} game - Reference to the Phaser game instance.
+     * @param {string} projectileSprite - Name of projectile sprite.
      */
-    constructor (game) {
+    constructor (game, projectileSprite) {
         super(game);
 
         this.group = this.scene.physics.add.group({
             allowGravity: false
         });
+        this.projectileSprite = projectileSprite;
     }
 
     /**
@@ -64,7 +66,7 @@ class ProjectilesGroup extends GameObjectsGroup {
      * @return {ProjectilesGroup} This game objects group.
      */
     spawn (x, y, rotationAngle) {
-        let projectile = new Projectile(this.game, this);
+        let projectile = new Projectile(this.game, this, this.projectileSprite);
 
         projectile.spawn(x, y, rotationAngle);
         this.addMember(projectile);

@@ -154,9 +154,9 @@ class Main extends Phaser.Scene {
     create () {
         let asteroidsGroup = this.gameObjects['asteroids-group'] = new AsteroidsGroup(this.game);
         let explosionsGroup = this.gameObjects['explosions-group'] = new ExplosionsGroup(this.game);
-        let saucersProjectilesGroup = this.gameObjects['saucers-projectiles-group'] = new ProjectilesGroup(this.game);
+        let saucersProjectilesGroup = this.gameObjects['saucers-projectiles-group'] = new ProjectilesGroup(this.game, 'saucer-projectile');
         let saucersGroup = this.gameObjects['saucers-group'] = new SaucersGroup(this.game, saucersProjectilesGroup);
-        let playerProjectilesGroup = this.gameObjects['player-projectiles-group'] = new ProjectilesGroup(this.game);
+        let playerProjectilesGroup = this.gameObjects['player-projectiles-group'] = new ProjectilesGroup(this.game, 'player-projectile');
         let player = this.gameObjects['player'] = new Player(this.game, playerProjectilesGroup);
         let playerSpawnX = this.physics.world.bounds.centerX;
         let playerSpawnY = this.physics.world.bounds.centerY;

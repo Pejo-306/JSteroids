@@ -87,7 +87,8 @@ class Projectile extends GroupGameObject {
      * @param {Phaser.Scene} scene - The current game scene.
      */
     static preload (scene) {
-        scene.load.image('projectile', 'assets/sprites/projectile.png');
+        scene.load.image('player-projectile', 'assets/sprites/player-projectile.png');
+        scene.load.image('saucer-projectile', 'assets/sprites/saucer-projectile.png');
     }
 
     /**
@@ -108,7 +109,7 @@ class Projectile extends GroupGameObject {
      * @return {Projectile} This projectile instance.
      */
     spawn (x, y, rotationAngle) {
-        this.sprite = this.group.create(x, y, 'projectile');
+        this.sprite = this.group.create(x, y, this.gameObjectsGroup.projectileSprite);
         this.sprite.angle = rotationAngle;
         // Set player's velocity based on the given staring orientation angle.
         this.scene.physics.velocityFromRotation(
