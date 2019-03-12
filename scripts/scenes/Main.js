@@ -23,9 +23,12 @@ import { generateRandomInteger, choose } from '../helper/random.js';
  * This scene contains the game's gameplay. Asteroids are spawned in waves
  * in random locations apart from each other. The wave's asteroid count is
  * ever increasing. The scene never stops spawning asteroid waves.
- * The player has control over his/her game object - a saucer which may
+ * The player has control over his/her game object - a spaceship which may
  * shoot projectiles. The player may destroy asteroids by shooting at them
  * with their projectiles.
+ * Saucers are the player's enemies. They appear randomly every so often,
+ * travelling in a random direction and continuosly spinning. Furthermore,
+ * saucers periodically shoot projectiles in their forwards direction.
  *
  * @class Main
  * @extends Phaser.Scene
@@ -85,6 +88,17 @@ class Main extends Phaser.Scene {
      */
     static get ASTEROID_SPAWN_DELAY () { return 1500; } // in ms
 
+    /**
+     * Interval of time within which there is a guaranteed saucer spawn.
+     *
+     * @public
+     * @static
+     * @readonly
+     * @method Main.SAUCER_SPAWN_INTERVAL
+     * @since v1.0.0-alpha2
+     * 
+     * @return {number} Saucer spawning period.
+     */
     static get SAUCER_SPAWN_INTERVAL () { return 2000; }
 
     /**
@@ -300,6 +314,9 @@ class Main extends Phaser.Scene {
     /**
      * Spawn player object's sprite in the game world.
      *
+     * This method also configures all interactions with other game objects. 
+     * In any case, the player is destroyed when colliding with them.
+     *
      * @private
      * @method Main#spawnPlayer
      * @since v1.0.0-alpha
@@ -315,6 +332,8 @@ class Main extends Phaser.Scene {
         let saucersProjectilesGroup = this.gameObjects['saucers-projectiles-group'];
 
         player.spawn(x, y, invincibility);
+        // Collision with asteroids
+        // Result: both the player and the colliding asteroid are destroyed 
         this.physics.add.overlap(
             player.sprite, 
             asteroidsGroup.group, 
@@ -324,6 +343,8 @@ class Main extends Phaser.Scene {
             null, 
             this
         );
+        // Collision with saucers 
+        // Result: both the player and the colliding saucer are destroyed 
         this.physics.add.overlap(
             player.sprite, 
             saucersGroup.group, 
@@ -333,6 +354,8 @@ class Main extends Phaser.Scene {
             null, 
             this
         );
+        // Collision with saucers' projectiles
+        // Result: the player is killed
         this.physics.add.overlap(
             player.sprite, 
             saucersProjectilesGroup.group, 
@@ -391,6 +414,18 @@ class Main extends Phaser.Scene {
         });
     }
 
+    /**
+     * Periodically spawn saucers.
+     *
+     * It is guaranteed that a new flying saucer will be spawned sometime 
+     * within the interval of <SAUCER_SPAWN_INTERVAL>. This process repeats
+     * endlessly every after <SAUCER_SPAWN_INTERVAL> time.
+     *
+     * @private
+     * @callback Main~startSpawningSaucers
+     * @method Main#startSpawningSaucers
+     * @since v1.0.0-alpha2
+     */
     startSpawningSaucers () {
         // Spawn a saucer sometime in the interval [0, SAUCER_SPAWN_INTERVAL]
         this.time.addEvent({
@@ -406,6 +441,17 @@ class Main extends Phaser.Scene {
         });
     }
 
+    /**
+     * Spawn a flying saucer in the game world.
+     *
+     * The saucer itself is spawned outside the world's bounds. Futhermore,
+     * its level is randomly determined.
+     *
+     * @private
+     * @callback Main~spawnSaucer
+     * @method Main#spawnSaucer
+     * @since v1.0.0-alpha2
+     */
     spawnSaucer () {
         // Randomly choose new saucer's level
         let level = generateRandomInteger(Saucer.MIN_LEVEL, Saucer.MAX_LEVEL, false);
