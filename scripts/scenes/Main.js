@@ -33,7 +33,7 @@ import { generateRandomInteger, choose } from '../helper/random.js';
  * @class Main
  * @extends Phaser.Scene
  * @since v1.0.0-alpha
- * @version v1.0.0-alpha2
+ * @version v1.0.0
  */
 class Main extends Phaser.Scene {
 
@@ -108,11 +108,28 @@ class Main extends Phaser.Scene {
     static get SAUCER_SPAWN_INTERVAL () { return 10000; } // in ms
 
     /**
+     * Amount of additional score to add an additional life.
+     *
+     * Every time this amount of additional score is added, the player
+     * receives an additional life.
+     *
+     * @public
+     * @static
+     * @readonly
+     * @method Main.ADDITIONAL_LIFE_AMOUNT
+     * @since v1.0.0
+     * @version v1.0.0
+     *
+     * @return {number} Additional score amount.
+     */
+    static get ADDITIONAL_LIFE_AMOUNT () { return 10000; }
+
+    /**
      * Construct main game scene.
      *
      * @constructor
      * @since v1.0.0-alpha
-     * @version v1.0.0-alpha
+     * @version v1.0.0
      */
     constructor () {
         super();
@@ -123,6 +140,7 @@ class Main extends Phaser.Scene {
         this.spawnedAsteroids = 0;
         this.score = 0;
         this.scoringTable = null;
+        this.addedLives = 0;
     }
 
     /**
@@ -132,7 +150,7 @@ class Main extends Phaser.Scene {
      * @override
      * @method Main#preload
      * @since v1.0.0-alpha
-     * @version v1.0.0-alpha2
+     * @version v1.0.0
      */
     preload () {
         AsteroidsGroup.preload(this);
@@ -161,7 +179,7 @@ class Main extends Phaser.Scene {
      * @override
      * @method Main#create
      * @since v1.0.0-alpha
-     * @version v1.0.0-alpha2
+     * @version v1.0.0
      */
     create () {
         let asteroidsGroup = this.gameObjects['asteroids-group'] = new AsteroidsGroup(this.game);
@@ -174,6 +192,7 @@ class Main extends Phaser.Scene {
         let playerSpawnY = this.physics.world.bounds.centerY;
         
         this.scoringTable = this.cache.json.get('scoring-table');
+
         // Collision between the player's projectiles and asteroids
         this.physics.add.collider(
             playerProjectilesGroup.group, 
@@ -239,37 +258,6 @@ class Main extends Phaser.Scene {
     update () {
         for (let objectName in this.gameObjects) {
             this.gameObjects[objectName].update();
-        }
-    }
-
-    /**
-     * Kill the player.
-     *
-     * If the player has any remaining lives, the latter are decremented and
-     * the player is respawned after a delay. Otherwise, the game ends.
-     *
-     * @private
-     * @method Main#killPlayer
-     * @since v1.0.0-alpha
-     * @version v1.0.0-alpha
-     */
-    killPlayer () {
-        if (this.playerLives > 0) {
-            let playerSpawnX = this.physics.world.bounds.centerX;
-            let playerSpawnY = this.physics.world.bounds.centerY;
-
-            this.playerLives--;
-            console.log(`Remaining player lives: ${this.playerLives}`);
-            // Respawn player after delay
-            this.time.addEvent({
-                delay: this.constructor.PLAYER_RESPAWN_DELAY,
-                callback: this.spawnPlayer,
-                args: [playerSpawnX, playerSpawnY],
-                callbackScope: this
-            });
-        } else {
-            console.log("GAME OVER");
-            console.log(`Final score: ${this.score}`);
         }
     }
 
@@ -462,7 +450,7 @@ class Main extends Phaser.Scene {
      * @callback Main~destroyAsteroid
      * @method Main#destroyAsteroid
      * @since v1.0.0-alpha
-     * @version v1.0.0-alpha2
+     * @version v1.0.0
      *
      * @param {Phaser.GameObjects.Sprite} projectileSprite - The projectile's colliding sprite.
      * @param {Phaser.GameObjects.Sprite} asteroidSprite - The asteroid's colliding sprite.
@@ -475,7 +463,7 @@ class Main extends Phaser.Scene {
             .get('sprite', asteroidSprite);
 
         // Increase the player's score
-        this.score += this.scoringTable['asteroids'][asteroid.level.toString().padStart(2, '0')];
+        this.incrementScore(this.scoringTable['asteroids'][asteroid.level.toString().padStart(2, '0')]);
 
         this.gameObjects['explosions-group'].spawnExplosionBetweenObjects(projectile, asteroid);
         projectile.destroy();
@@ -498,7 +486,7 @@ class Main extends Phaser.Scene {
      * @callback Main~destroySaucer
      * @method Main#destroySaucer
      * @since v1.0.0-alpha2
-     * @version v1.0.0-alpha2
+     * @version v1.0.0
      *
      * @param {Phaser.GameObjects.Sprite} projectileSprite - The projectile's colliding sprite.
      * @param {Phaser.GameObjects.Sprite} saucer - The saucer's colliding sprite.
@@ -511,11 +499,62 @@ class Main extends Phaser.Scene {
             .get('sprite', saucerSprite);
 
         // Increase the player's score
-        this.score += this.scoringTable['saucers'][saucer.level.toString().padStart(2, '0')];
+        this.incrementScore(this.scoringTable['saucers'][saucer.level.toString().padStart(2, '0')]);
 
         this.gameObjects['explosions-group'].spawnExplosionBetweenObjects(projectile, saucer);
         projectile.destroy();
         saucer.destroy();
+    }
+
+    /**
+     * Kill the player.
+     *
+     * If the player has any remaining lives, the latter are decremented and
+     * the player is respawned after a delay. Otherwise, the game ends.
+     *
+     * @private
+     * @method Main#killPlayer
+     * @since v1.0.0-alpha
+     * @version v1.0.0-alpha
+     */
+    killPlayer () {
+        if (this.playerLives > 0) {
+            let playerSpawnX = this.physics.world.bounds.centerX;
+            let playerSpawnY = this.physics.world.bounds.centerY;
+
+            this.playerLives--;
+            console.log(`Remaining player lives: ${this.playerLives}`);
+            // Respawn player after delay
+            this.time.addEvent({
+                delay: this.constructor.PLAYER_RESPAWN_DELAY,
+                callback: this.spawnPlayer,
+                args: [playerSpawnX, playerSpawnY],
+                callbackScope: this
+            });
+        } else {
+            console.log("GAME OVER");
+            console.log(`Final score: ${this.score}`);
+        }
+    }
+
+    /**
+     * Increment the player's score by a given amount.
+     *
+     * After every 'ADDITIONAL_LIFE_AMOUNT' amount of score has been added to
+     * the overall, the player receives an additional life.
+     *
+     * @private
+     * @method Main#incrementScore
+     * @since v1.0.0
+     * @version v1.0.0
+     */
+    incrementScore (amount) {
+        this.score += amount;
+        if (this.score >= (this.addedLives + 1) * this.constructor.ADDITIONAL_LIFE_AMOUNT) {
+            this.addedLives += 1;
+            this.playerLives += 1;
+            console.log("Adding one additional life.");
+        }
     }
 
     /**
