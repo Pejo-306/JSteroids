@@ -125,6 +125,20 @@ class Main extends Phaser.Scene {
     static get ADDITIONAL_LIFE_AMOUNT () { return 10000; }
 
     /**
+     * Amount of additional score needed to increment the difficulty multiplier by 1.
+     *
+     * @public
+     * @static
+     * @readonly
+     * @method Main.DIFFICULTY_INCREMENT_AMOUNT
+     * @since v1.0.0
+     * @version v1.0.0
+     *
+     * @return {number} Additional score amount to increment multiplier.
+     */
+    static get DIFFICULTY_INCREMENT_AMOUNT () { return 20000; }
+
+    /**
      * Construct main game scene.
      *
      * @constructor
@@ -560,15 +574,19 @@ class Main extends Phaser.Scene {
     /**
      * Get difficutly multiplier.
      *
+     * The difficulty multiplier depends on the player's current score - the
+     * higher the score amount, the higher the multiplier. In any case, the
+     * minimum difficulty multiplier is 1.
+     *
      * @private
      * @method Main#difficultyMultiplier
      * @since v1.0.0-alpha
-     * @version v1.0.0-alpha
+     * @version v1.0.0
      *
      * @return {number} Difficulty multiplier.
      */
     get difficultyMultiplier () {
-        return 1.5;
+        return 1 + (this.score / this.constructor.DIFFICULTY_INCREMENT_AMOUNT);
     }
 
 }
