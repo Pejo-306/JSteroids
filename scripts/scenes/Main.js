@@ -121,6 +121,8 @@ class Main extends Phaser.Scene {
         this.playerLives = this.constructor.PLAYER_LIVES;
         this.controls = {};
         this.spawnedAsteroids = 0;
+        this.score = 0;
+        this.scoringTable = null;
     }
 
     /**
@@ -138,6 +140,7 @@ class Main extends Phaser.Scene {
         ExplosionsGroup.preload(this);
         SaucersGroup.preload(this);
         Player.preload(this);
+        this.load.json('scoring-table', 'assets/gamedata/scoring_table.json');
     }
     
     /**
@@ -170,6 +173,7 @@ class Main extends Phaser.Scene {
         let playerSpawnX = this.physics.world.bounds.centerX;
         let playerSpawnY = this.physics.world.bounds.centerY;
         
+        this.scoringTable = this.cache.json.get('scoring-table');
         // Collision between the player's projectiles and asteroids
         this.physics.add.collider(
             playerProjectilesGroup.group, 
@@ -265,6 +269,7 @@ class Main extends Phaser.Scene {
             });
         } else {
             console.log("GAME OVER");
+            console.log(`Final score: ${this.score}`);
         }
     }
 
@@ -449,7 +454,9 @@ class Main extends Phaser.Scene {
      * explosion VFX is displayed afterwards.
      *
      * If the whole asteroids wave has been destroyed, a new one is spawned.
-     * The newer wave comes with more asteroids than the previous one.
+     * The newer wave comes with more asteroids than the previous one. 
+     * The player's score is increased for destroying an asteroid according 
+     * to the scoring table.
      *
      * @private
      * @callback Main~destroyAsteroid
@@ -467,6 +474,9 @@ class Main extends Phaser.Scene {
         let asteroid = this.gameObjects['asteroids-group'].memberObjects
             .get('sprite', asteroidSprite);
 
+        // Increase the player's score
+        this.score += this.scoringTable['asteroids'][asteroid.level.toString().padStart(2, '0')];
+
         this.gameObjects['explosions-group'].spawnExplosionBetweenObjects(projectile, asteroid);
         projectile.destroy();
         asteroid.destroy();
@@ -481,7 +491,8 @@ class Main extends Phaser.Scene {
      * Handle a collision between a player's projectile and a saucer.
      *
      * Both the player's projectile and the saucer are destroyed. An
-     * explosion VFX is displayed afterwards.
+     * explosion VFX is displayed afterwards. The player's score is increased
+     * for destroying a saucer according to the scoring table.
      *
      * @private
      * @callback Main~destroySaucer
@@ -498,6 +509,9 @@ class Main extends Phaser.Scene {
             .get('sprite', projectileSprite);
         let saucer = this.gameObjects['saucers-group'].memberObjects
             .get('sprite', saucerSprite);
+
+        // Increase the player's score
+        this.score += this.scoringTable['saucers'][saucer.level.toString().padStart(2, '0')];
 
         this.gameObjects['explosions-group'].spawnExplosionBetweenObjects(projectile, saucer);
         projectile.destroy();
