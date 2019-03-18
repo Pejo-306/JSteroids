@@ -139,6 +139,34 @@ class Main extends Phaser.Scene {
     static get DIFFICULTY_INCREMENT_AMOUNT () { return 20000; }
 
     /**
+     * Standard UI elements unit.
+     *
+     * @public
+     * @static
+     * @readonly
+     * @method Main.UI_OFFSET
+     * @since v1.0.0
+     * @version v1.0.0
+     *
+     * @return {number} Standard UI elements unit.
+     */
+    static get UI_OFFSET () { return 16 };
+
+    /**
+     * UI font options.
+     *
+     * @public
+     * @static
+     * @readonly
+     * @method Main.UI_FONT
+     * @since v1.0.0
+     * @version v1.0.0
+     *
+     * @return {object} UI font.
+     */
+    static get UI_FONT () { return { fontSize: '32px', fill: '#fff' }; }
+
+    /**
      * Construct main game scene.
      *
      * @constructor
@@ -149,12 +177,14 @@ class Main extends Phaser.Scene {
         super();
 
         this.gameObjects = {};
+        this.uiObjects = {};
         this.playerLives = this.constructor.PLAYER_LIVES;
         this.controls = {};
         this.spawnedAsteroids = 0;
         this.score = 0;
         this.scoringTable = null;
-        this.addedLives = 0;
+        this.nextLifeScore = this.constructor.ADDITIONAL_LIFE_AMOUNT;
+        this.gameOver = false;
     }
 
     /**
@@ -256,6 +286,7 @@ class Main extends Phaser.Scene {
         this.spawnAsteroids(5);
         this.startSpawningSaucers();
         this.initializeControls();
+        this.setupUI();
     }
 
     /**
@@ -285,6 +316,21 @@ class Main extends Phaser.Scene {
      */
     initializeControls () {
         this.controls.cursors = this.input.keyboard.createCursorKeys();
+    }
+
+    setupUI () {
+        this.uiObjects['score-text'] = this.add.text(
+            this.constructor.UI_OFFSET,
+            this.constructor.UI_OFFSET,
+            'score: 0',
+            this.constructor.UI_FONT
+        );
+        this.uiObjects['lives-text'] = this.add.text(
+            this.constructor.UI_OFFSET,
+            this.constructor.UI_OFFSET * 4,
+            `lives: ${this.playerLives}`,
+            this.constructor.UI_FONT
+        );
     }
 
     /**
@@ -529,7 +575,7 @@ class Main extends Phaser.Scene {
      * @private
      * @method Main#killPlayer
      * @since v1.0.0-alpha
-     * @version v1.0.0-alpha
+     * @version v1.0.0
      */
     killPlayer () {
         if (this.playerLives > 0) {
@@ -537,6 +583,7 @@ class Main extends Phaser.Scene {
             let playerSpawnY = this.physics.world.bounds.centerY;
 
             this.playerLives--;
+            this.uiObjects['lives-text'].setText(`lives: ${this.playerLives}`);
             console.log(`Remaining player lives: ${this.playerLives}`);
             // Respawn player after delay
             this.time.addEvent({
@@ -546,6 +593,7 @@ class Main extends Phaser.Scene {
                 callbackScope: this
             });
         } else {
+            this.gameOver = true;
             console.log("GAME OVER");
             console.log(`Final score: ${this.score}`);
         }
@@ -563,11 +611,15 @@ class Main extends Phaser.Scene {
      * @version v1.0.0
      */
     incrementScore (amount) {
-        this.score += amount;
-        if (this.score >= (this.addedLives + 1) * this.constructor.ADDITIONAL_LIFE_AMOUNT) {
-            this.addedLives += 1;
-            this.playerLives += 1;
-            console.log("Adding one additional life.");
+        if (!this.gameOver) {
+            this.score += amount;
+            this.uiObjects['score-text'].setText(`score: ${this.score}`);
+            if (this.score >= this.nextLifeScore) {
+                this.nextLifeScore += this.constructor.ADDITIONAL_LIFE_AMOUNT;
+                this.playerLives++;
+                this.uiObjects['lives-text'].setText(`lives: ${this.playerLives}`);
+                console.log("Adding one additional life.");
+            }
         }
     }
 
