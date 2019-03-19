@@ -9,6 +9,7 @@ import 'phaser';
 import GameObject from './GameObject.js';
 
 /**
+ * @classdesc
  * Base class for all game objects who are members of a game objects group.
  *
  * This class is an extension of the base GameObject class. The only difference

@@ -1,3 +1,5 @@
 # Sprites
 *.png filter=lfs diff=lfs merge=lfs -text
+# Fonts
+*.fnt filter=lfs diff=lfs merge=lfs -text
 

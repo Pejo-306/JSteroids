@@ -7,6 +7,7 @@
 import 'phaser';
 
 /**
+ * @classdesc
  * Base class for all game objects.
  *
  * This abstract class declares some common interface methods that should be 
