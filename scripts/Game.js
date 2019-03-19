@@ -8,6 +8,7 @@ import 'phaser';
 
 import Boot from './scenes/Boot.js';
 import Main from './scenes/Main.js';
+import MainMenu from './scenes/MainMenu.js';
 
 /**
  * @classdesc
@@ -20,7 +21,7 @@ import Main from './scenes/Main.js';
  * @class Game
  * @extends Phaser.Game
  * @since v1.0.0-alpha
- * @version v1.0.0-alpha
+ * @version v1.0.0
  */
 class Game extends Phaser.Game {
 
@@ -32,7 +33,7 @@ class Game extends Phaser.Game {
      *
      * @constructor
      * @since v1.0.0-alpha
-     * @version v1.0.0-alpha
+     * @version v1.0.0
      *
      * @param {object} config - Configuration options for Phaser game instance.
      */
@@ -40,10 +41,11 @@ class Game extends Phaser.Game {
         super(config);
         
         this.currentSceneName = null;
-        this.postSetupScene = 'Main';
+        this.postSetupScene = 'MainMenu';
 
         this.scene.add('Boot', Boot, false);
         this.scene.add('Main', Main, false);
+        this.scene.add('MainMenu', MainMenu, false);
         this.switchScene('Boot');
     }
 
@@ -51,17 +53,18 @@ class Game extends Phaser.Game {
      * Switch from current scene to another game scene.
      *
      * The game instance contains a reference to the current scene's name
-     * which is set automatically by this method. Afterwards, the selected
-     * scene is started.
+     * which is set automatically by this method. Afterwards, the current 
+     * scene is stopped whilst the selected scene is started.
      *
      * @public
      * @method Game#switchScene
      * @since v1.0.0-alpha
-     * @version v1.0.0-alpha
+     * @version v1.0.0
      *
      * @param {string} name - Reference to scene.
      */
     switchScene (name) {
+        this.scene.stop(this.currentSceneName);
         this.currentSceneName = name;
         this.scene.start(name);
     }

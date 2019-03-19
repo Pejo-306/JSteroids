@@ -20,6 +20,28 @@ import 'phaser';
 class Boot extends Phaser.Scene {
 
     /**
+     * Preload resources required by all game scene.
+     *
+     * @public
+     * @override
+     * @method Boot#preload
+     * @since v1.0.0
+     * @version v1.0.0
+     */
+    preload () {
+        this.load.bitmapFont(
+            'hyperspace', 
+            'assets/font/hyperspace.png', 
+            'assets/font/hyperspace.fnt'
+        );
+        this.load.bitmapFont(
+            'hyperspace-bold', 
+            'assets/font/hyperspace-bold.png', 
+            'assets/font/hyperspace-bold.fnt'
+        );
+    }
+
+    /**
      * Setup the game instance for play.
      *
      * As of now, this method does nothing. It switches to the post setup
