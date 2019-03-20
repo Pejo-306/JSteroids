@@ -12,7 +12,7 @@ import ExplosionsGroup from '../groups/ExplosionsGroup.js';
 import SaucersGroup from '../groups/SaucersGroup.js';
 import Player from '../objects/Player.js';
 import Saucer from '../objects/Saucer.js';
-
+import MenuTextButton from '../ui/MenuTextButton.js';
 import KeepoutZone from '../helper/KeepoutZone.js';
 import { generateRandomInteger, choose } from '../helper/random.js';
 
@@ -139,43 +139,59 @@ class Main extends Phaser.Scene {
     static get DIFFICULTY_INCREMENT_AMOUNT () { return 20000; }
 
     /**
-     * Standard UI elements unit.
+     * Bitmap text size of UI text.
      *
      * @public
      * @static
      * @readonly
-     * @method Main.UI_OFFSET
+     * @method Main.UI_TEXT_SIZE
      * @since v1.0.0
      * @version v1.0.0
      *
-     * @return {number} Standard UI elements unit.
+     * @return {number} Bitmap text size.
      */
-    static get UI_OFFSET () { return 16 };
+    static get UI_TEXT_SIZE () { return 20; }
 
     /**
-     * UI font options.
+     * Tint color of game over text.
      *
      * @public
      * @static
      * @readonly
-     * @method Main.UI_FONT
+     * @method Main.UI_GAME_OVER_TINT
      * @since v1.0.0
      * @version v1.0.0
      *
-     * @return {object} UI font.
+     * @return {number} Tint color.
      */
-    static get UI_FONT () { return { fontSize: '32px', fill: '#fff' }; }
+    static get UI_GAME_OVER_TINT () { return 0xca2222; }
 
     /**
-     * Construct main game scene.
+     * Delay before visualizing the game over UI elements.
      *
-     * @constructor
-     * @since v1.0.0-alpha
+     * @public
+     * @static
+     * @readonly
+     * @method Main.UI_GAME_OVER_DELAY
+     * @since v1.0.0
      * @version v1.0.0
+     *
+     * @return {number} Game over display delay.
      */
-    constructor () {
-        super();
+    static get UI_GAME_OVER_DELAY () { return 2000; }  // in ms
 
+    /**
+     * Initialize main game scene.
+     *
+     * @public
+     * @override
+     * @method Main#init
+     * @since v1.0.0
+     * @version v1.0.0
+     *
+     * @param {object} data - Parameters passed from previous scene.
+     */
+    init (data) {
         this.gameObjects = {};
         this.uiObjects = {};
         this.playerLives = this.constructor.PLAYER_LIVES;
@@ -241,7 +257,7 @@ class Main extends Phaser.Scene {
         this.physics.add.collider(
             playerProjectilesGroup.group, 
             asteroidsGroup.group,
-            function (projectileSprite, asteroidSprite) { 
+            (projectileSprite, asteroidSprite) => { 
                 this.destroyAsteroid(
                     projectileSprite, 
                     asteroidSprite, 
@@ -255,7 +271,7 @@ class Main extends Phaser.Scene {
         this.physics.add.collider(
             playerProjectilesGroup.group, 
             saucersGroup.group,
-            function (projectileSprite, saucerSprite) { 
+            (projectileSprite, saucerSprite) => { 
                 this.destroySaucer(
                     projectileSprite, 
                     saucerSprite, 
@@ -269,7 +285,7 @@ class Main extends Phaser.Scene {
         this.physics.add.collider(
             saucersProjectilesGroup.group,
             asteroidsGroup.group,
-            function (projectileSprite, asteroidSprite) { 
+            (projectileSprite, asteroidSprite) => { 
                 this.destroyAsteroid(
                     projectileSprite, 
                     asteroidSprite, 
@@ -318,19 +334,35 @@ class Main extends Phaser.Scene {
         this.controls.cursors = this.input.keyboard.createCursorKeys();
     }
 
+    /**
+     * Setup main scene's UI elements.
+     *
+     * The UI elements consist of two texts which keep tabs on the player's
+     * lives and the player's score.
+     *
+     * @private
+     * @method Main#setupUI
+     * @since v1.0.0
+     * @version v1.0.0
+     */
     setupUI () {
-        this.uiObjects['score-text'] = this.add.text(
-            this.constructor.UI_OFFSET,
-            this.constructor.UI_OFFSET,
+        let scoreText = this.uiObjects['score-text'] = this.add.bitmapText(
+            this.physics.world.bounds.width / 32,
+            this.physics.world.bounds.height / 16,
+            'hyperspace-bold',
             'score: 0',
-            this.constructor.UI_FONT
+            this.constructor.UI_TEXT_SIZE, 0
         );
-        this.uiObjects['lives-text'] = this.add.text(
-            this.constructor.UI_OFFSET,
-            this.constructor.UI_OFFSET * 4,
+        let livesText = this.uiObjects['lives-text'] = this.add.bitmapText(
+            this.physics.world.bounds.width / 32,
+            this.physics.world.bounds.height / 8,
+            'hyperspace-bold',
             `lives: ${this.playerLives}`,
-            this.constructor.UI_FONT
+            this.constructor.UI_TEXT_SIZE, 0
         );
+
+        scoreText.setOrigin(0, 0.5);
+        livesText.setOrigin(0, 0.5);
     }
 
     /**
@@ -360,7 +392,7 @@ class Main extends Phaser.Scene {
         this.physics.add.overlap(
             player.sprite, 
             asteroidsGroup.group, 
-            function (playerSprite, asteroidSprite) {
+            (playerSprite, asteroidSprite) => {
                 player.collideWithSprite(asteroidSprite, this.gameObjects['asteroids-group']);
             }, 
             null, 
@@ -371,7 +403,7 @@ class Main extends Phaser.Scene {
         this.physics.add.overlap(
             player.sprite, 
             saucersGroup.group, 
-            function (playerSprite, saucerSprite) {
+            (playerSprite, saucerSprite) => {
                 player.collideWithSprite(saucerSprite, this.gameObjects['saucers-group']);
             }, 
             null, 
@@ -382,7 +414,7 @@ class Main extends Phaser.Scene {
         this.physics.add.overlap(
             player.sprite, 
             saucersProjectilesGroup.group, 
-            function (playerSprite, saucerProjectileSprite) {
+            (playerSprite, saucerProjectileSprite) => {
                 player.collideWithSprite(saucerProjectileSprite, this.gameObjects['saucers-projectiles-group']);
             }, 
             null, 
@@ -443,27 +475,29 @@ class Main extends Phaser.Scene {
      *
      * It is guaranteed that a new flying saucer will be spawned sometime 
      * within the interval of <SAUCER_SPAWN_INTERVAL>. This process repeats
-     * endlessly every after <SAUCER_SPAWN_INTERVAL> time.
+     * endlessly every after <SAUCER_SPAWN_INTERVAL> time unless the game ends.
      *
      * @private
      * @callback Main~startSpawningSaucers
      * @method Main#startSpawningSaucers
      * @since v1.0.0-alpha2
-     * @version v1.0.0-alpha2
+     * @version v1.0.0
      */
     startSpawningSaucers () {
-        // Spawn a saucer sometime in the interval [0, SAUCER_SPAWN_INTERVAL]
-        this.time.addEvent({
-            delay: generateRandomInteger(0, this.constructor.SAUCER_SPAWN_INTERVAL, false),
-            callback: this.spawnSaucer,
-            callbackScope: this
-        });
-        // Repeat the spawning process after SAUCER_SPAWN_INTERVAL 
-        this.time.addEvent({
-            delay: this.constructor.SAUCER_SPAWN_INTERVAL,
-            callback: this.startSpawningSaucers,
-            callbackScope: this
-        });
+        if (!this.gameOver) {
+            // Spawn a saucer sometime in the interval [0, SAUCER_SPAWN_INTERVAL]
+            this.time.addEvent({
+                delay: generateRandomInteger(0, this.constructor.SAUCER_SPAWN_INTERVAL, false),
+                callback: this.spawnSaucer,
+                callbackScope: this
+            });
+            // Repeat the spawning process after SAUCER_SPAWN_INTERVAL 
+            this.time.addEvent({
+                delay: this.constructor.SAUCER_SPAWN_INTERVAL,
+                callback: this.startSpawningSaucers,
+                callbackScope: this
+            });
+        }
     }
 
     /**
@@ -584,7 +618,6 @@ class Main extends Phaser.Scene {
 
             this.playerLives--;
             this.uiObjects['lives-text'].setText(`lives: ${this.playerLives}`);
-            console.log(`Remaining player lives: ${this.playerLives}`);
             // Respawn player after delay
             this.time.addEvent({
                 delay: this.constructor.PLAYER_RESPAWN_DELAY,
@@ -593,10 +626,68 @@ class Main extends Phaser.Scene {
                 callbackScope: this
             });
         } else {
-            this.gameOver = true;
-            console.log("GAME OVER");
-            console.log(`Final score: ${this.score}`);
+            // Visualize end game UI after delay
+            this.time.addEvent({
+                delay: this.constructor.UI_GAME_OVER_DELAY,
+                callback: this.endGame,
+                callbackScope: this
+            });
         }
+    }
+
+    /**
+     * End the game.
+     *
+     * The scene's gameOver variable is set which prevents further spawing or
+     * score/lives increase. Furthermore, a game over message is displayed
+     * as well as the final score. There are two buttons for restarting the
+     * game and for returning to the main menu.
+     *
+     * @private
+     * @method Main#endGame
+     * @since v1.0.0
+     * @version v1.0.0
+     */
+    endGame () {
+        let gameOverText = this.uiObjects['game-over-text'] = this.add.bitmapText(
+            this.physics.world.bounds.centerX,
+            this.physics.world.bounds.centerY - this.physics.world.bounds.height / 16,
+            'hyperspace-bold',
+            'GAME OVER',
+            this.constructor.UI_TEXT_SIZE * 2, 0
+        );
+        let finalScoreText = this.uiObjects['final-score-text'] = this.add.bitmapText(
+            this.physics.world.bounds.centerX,
+            this.physics.world.bounds.centerY + this.physics.world.bounds.height / 16,
+            'hyperspace-bold',
+            `FINAL SCORE: ${this.score}`,
+            this.constructor.UI_TEXT_SIZE, 0
+        );
+        let restartGameButton = this.uiObjects['restart-game-button'] = new MenuTextButton(
+            this,
+            this.physics.world.bounds.centerX - this.physics.world.bounds.width / 32,
+            finalScoreText.y + this.physics.world.bounds.height / 16,
+            'hyperspace-bold',
+            'RESTART',
+            this.constructor.UI_TEXT_SIZE, 0,
+            () => { this.game.switchScene('Main'); }
+        );
+        let mainMenuButton = this.uiObjects['main-menu-button'] = new MenuTextButton(
+            this,
+            this.physics.world.bounds.centerX + this.physics.world.bounds.width / 32,
+            finalScoreText.y + this.physics.world.bounds.height / 16,
+            'hyperspace-bold',
+            'MAIN MENU',
+            this.constructor.UI_TEXT_SIZE, 0,
+            () => { this.game.switchScene('MainMenu'); }
+        );
+
+        gameOverText.setOrigin(0.5, 0.5);
+        gameOverText.setTint(this.constructor.UI_GAME_OVER_TINT);
+        finalScoreText.setOrigin(0.5, 0.5);
+        restartGameButton.setOrigin(1, 0.5);
+        mainMenuButton.setOrigin(0, 0.5);
+        this.gameOver = true;
     }
 
     /**

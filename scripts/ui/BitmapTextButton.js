@@ -25,8 +25,6 @@ class BitmapTextButton extends Phaser.GameObjects.BitmapText {
     /**
      * Construct bitmap text button.
      *
-     * The text object's origin is automatically centered.
-     *
      * @constructor
      * @since v1.0.0
      * @version v1.0.0
@@ -51,7 +49,6 @@ class BitmapTextButton extends Phaser.GameObjects.BitmapText {
                 this.enterButtonHoverState();
                 callback();
             });
-        this.setOrigin(0.5, 0.5);
         scene.add.existing(this);  // add button to passed scene
     }
 

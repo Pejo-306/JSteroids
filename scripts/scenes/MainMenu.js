@@ -83,15 +83,17 @@ class MainMenu extends Phaser.Scene {
     static get BUTTON_SIZE () { return 48; }
 
     /**
-     * Construct main menu scene.
+     * Initialize main menu scene.
      *
-     * @constructor
+     * @public
+     * @override
+     * @method MainMenu#init
      * @since v1.0.0
      * @version v1.0.0
+     *
+     * @param {object} data - Parameters passed from previous scene.
      */
-    constructor () {
-        super();
-
+    init (data) {
         this.gameObjects = {};
         this.uiObjects = {};
     }
@@ -223,6 +225,7 @@ class MainMenu extends Phaser.Scene {
         asteroidsTitle.setOrigin(0.5, 0.5);
         copyrightText.setOrigin(0.5, 0.5);
         versionText.setOrigin(0.5, 0.5);
+        startGameButton.setOrigin(0.5, 0.5);
     }
 
 }
