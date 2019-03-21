@@ -7,6 +7,7 @@
 import 'phaser';
 
 /**
+ * @classdesc
  * Keepout zone - prevents objects from interacting with this zone.
  *
  * The zone itself is a circle with a specified radius, spawned in the game
