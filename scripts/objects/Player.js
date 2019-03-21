@@ -63,7 +63,7 @@ class Player extends GameObject {
      *
      * @return {number} Max velocity value.
      */
-    static get MAX_VELOCITY () { return 200; }
+    static get MAX_VELOCITY () { return 300; }
 
     /**
      * Angular velocity which is set when rotating the player's sprite.
@@ -77,7 +77,7 @@ class Player extends GameObject {
      *
      * @return {number} Angular velocity value.
      */
-    static get ANGULAR_VELOCITY () { return 200; }
+    static get ANGULAR_VELOCITY () { return 300; }
 
     /**
      * Number of projectiles fired per second.
@@ -91,7 +91,7 @@ class Player extends GameObject {
      *
      * @return {number} Fire rate.
      */
-    static get FIRE_RATE () { return 10; }
+    static get FIRE_RATE () { return 8; }
 
     /**
      * Time in which the player is temporary invincible.
@@ -110,7 +110,7 @@ class Player extends GameObject {
     /**
      * Time in which the player's sprite is invisible when flashing.
      *
-     * @public
+     * @private
      * @static
      * @readonly
      * @method Player.FLASH_TIME

@@ -105,7 +105,7 @@ class Main extends Phaser.Scene {
      * 
      * @return {number} Saucer spawning period.
      */
-    static get SAUCER_SPAWN_INTERVAL () { return 10000; } // in ms
+    static get SAUCER_SPAWN_INTERVAL () { return 20000; } // in ms
 
     /**
      * Amount of additional score to add an additional life.

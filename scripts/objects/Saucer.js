@@ -7,7 +7,6 @@
 import 'phaser';
 
 import GroupGameObject from './GroupGameObject.js';
-
 import { generateRandomInteger } from '../helper/random.js';
 
 /**
@@ -81,7 +80,7 @@ class Saucer extends GroupGameObject {
      *
      * @return {number} Max value of base velocity.
      */
-    static get MAX_BASE_VELOCITY () { return 125; }
+    static get MAX_BASE_VELOCITY () { return 150; }
 
     /**
      * Minimum base angular velocity of saucers.

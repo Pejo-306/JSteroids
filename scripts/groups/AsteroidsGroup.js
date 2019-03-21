@@ -8,7 +8,6 @@ import 'phaser';
 
 import GameObjectsGroup from './GameObjectsGroup.js';
 import Asteroid from '../objects/Asteroid.js';
-
 import KeepoutZone from '../helper/KeepoutZone.js';
 import { generateRandomInteger } from '../helper/random.js';
 

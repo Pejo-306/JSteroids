@@ -7,7 +7,6 @@
 import 'phaser';
 
 import GroupGameObject from './GroupGameObject.js';
-
 import { generateRandomInteger } from '../helper/random.js';
 
 /**
@@ -66,7 +65,7 @@ class Asteroid extends GroupGameObject {
      *
      * @return {number} Min value of base velocity.
      */
-    static get MIN_BASE_VELOCITY () { return 10; }
+    static get MIN_BASE_VELOCITY () { return 15; }
 
     /**
      * Maximum base velocity of asteroids.
@@ -80,7 +79,7 @@ class Asteroid extends GroupGameObject {
      *
      * @return {number} Max value of base velocity.
      */
-    static get MAX_BASE_VELOCITY () { return 100; }
+    static get MAX_BASE_VELOCITY () { return 150; }
 
     /**
      * Minimum base angular velocity of asteroids.

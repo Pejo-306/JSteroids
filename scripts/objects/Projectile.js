@@ -50,7 +50,7 @@ class Projectile extends GroupGameObject {
      *
      * @return {number} Max velocity value.
      */
-    static get VELOCITY () { return 500; }
+    static get VELOCITY () { return 700; }
 
     /**
      * Padding added to each world boundary edge.
