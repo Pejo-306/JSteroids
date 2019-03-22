@@ -210,19 +210,20 @@ class Player extends GameObject {
     /**
      * Player's behavioural code that is executed on each game loop iteration.
      *
-     * The player may control his/her object via the cursor keys - accelerate 
-     * forwards, as well as rotate in both directions. Furthermore, the player
-     * has the option to shoot out projectiles with the spacebar.
+     * The player may control his/her object via the cursor keys or wasd keys -
+     * accelerate forwards, as well as rotate in both directions. Furthermore, 
+     * the player has the option to shoot out projectiles with the spacebar.
      *
      * @public
      * @override
      * @method Player#update
      * @since v1.0.0-alpha
-     * @since v1.0.0-alpha2
+     * @since v1.0.0
      */
     update () {
         if (!this.dead) {
-            if (this.scene.controls.cursors.up.isDown) {  // accelerate the player forwards
+            if (this.scene.controls.cursors.up.isDown
+                    || this.scene.controls.wasd.W.isDown) {  // accelerate the player forwards
                 this.scene.physics.velocityFromRotation(
                     this.sprite.rotation, 
                     this.constructor.MAX_VELOCITY,
@@ -232,9 +233,11 @@ class Player extends GameObject {
                 this.sprite.setAcceleration(0);
             }
 
-            if (this.scene.controls.cursors.left.isDown) {  // rotate the player counterclockwise
+            if (this.scene.controls.cursors.left.isDown 
+                    || this.scene.controls.wasd.A.isDown) {  // rotate the player counterclockwise
                 this.sprite.setAngularVelocity(-this.constructor.ANGULAR_VELOCITY);
-            } else if (this.scene.controls.cursors.right.isDown) {  // rotate the player clockwise
+            } else if (this.scene.controls.cursors.right.isDown
+                    || this.scene.controls.wasd.D.isDown) {  // rotate the player clockwise
                 this.sprite.setAngularVelocity(this.constructor.ANGULAR_VELOCITY);
             } else {
                 this.sprite.setAngularVelocity(0);

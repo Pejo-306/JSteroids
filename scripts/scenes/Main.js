@@ -328,10 +328,16 @@ class Main extends Phaser.Scene {
      * @private
      * @method Main#initializeControls
      * @since v1.0.0-alpha
-     * @version v1.0.0-alpha2
+     * @version v1.0.0
      */
     initializeControls () {
         this.controls.cursors = this.input.keyboard.createCursorKeys();
+        this.controls.wasd = {
+            W: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W),
+            A: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A),
+            S: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S),
+            D: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D)
+        }
     }
 
     /**
