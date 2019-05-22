@@ -208,7 +208,7 @@ class MainMenu extends Phaser.Scene {
             this.physics.world.bounds.width - this.physics.world.bounds.width / 16, 
             this.physics.world.bounds.height - this.physics.world.bounds.height / 16,
             'hyperspace-bold',
-            'v1.0.0',
+            'v1.0.1',
             this.constructor.VERSION_TEXT_SIZE, 0
         );
         let startGameButton = this.uiObjects['start-game-button'] = new MenuTextButton(
