@@ -715,7 +715,6 @@ class Main extends Phaser.Scene {
                 this.nextLifeScore += this.constructor.ADDITIONAL_LIFE_AMOUNT;
                 this.playerLives++;
                 this.uiObjects['lives-text'].setText(`lives: ${this.playerLives}`);
-                console.log("Adding one additional life.");
             }
         }
     }
